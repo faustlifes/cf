@@ -1,18 +1,29 @@
 {
   "name": "CF-UA",
   "version": "0.0.1",
-  "description": "It's web application for Cistic Fibrosis association of Ukraine",
+  "description": "It's web application for Cystic Fibrosis association of Ukraine",
   "author": "faust",
   "main": "index.js",
+  "license": "MIT",
   "scripts": {
     "start": "cd dist/server/ && node index.js",
     "build": "webpack && bash ./build.sh",
-    "webpack": "webpack",
-    "license": "MIT"
+    "webpack": "webpack"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "bootstrap": "^4.1.0",
     "react": "^16.3.2",
     "react-bootstrap": "^0.32.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.3",
+    "babel-polyfill": "^6.26.0",
+    "eslint": "^4.19.1",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "parallelshell": "^3.0.2",
+    "sass-loader": "^7.0.1",
+    "webpack": "^4.6.0"
   }
 }
