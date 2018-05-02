@@ -1,5 +1,6 @@
-﻿
-"use strict";
+﻿"use strict";
+
+require("babel-polyfill");
 
 module.exports = {
     entry: {
@@ -7,8 +8,10 @@ module.exports = {
     },
            
     output: {
-        filename: '[name].js'
+        filename: '[name].js',
+        sourceMapFilename: "[name].js.map",
     },
+    devtool: 'inline-source-map',
     module: {
         loaders: [
             {
