@@ -12,7 +12,7 @@ import Header from './main/Header.jsx';
 import Footer from './main/Footer.jsx';
 import routes from './data/routes.js'
 
-import NewsView from './main/NewsView.jsx';
+// import NewsView from './main/NewsView.jsx';
 
 //------------------------------------------------------
 import sliderReducer from './reducers/sliderReducer';
