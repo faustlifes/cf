@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import cookie from 'react-cookie';
+import Cookies from 'universal-cookie';
 
 import FeedbackItem from '../components/feedbackItem.jsx';
 import * as actions from '../actions/feedbackActions.js';
@@ -9,7 +9,7 @@ import * as actions from '../actions/feedbackActions.js';
 class FeedbackApp extends React.Component {
     constructor(props) {
         super(props);
-
+        this.cookies = new Cookies();
         this.addCommentHandler = this.addCommentHandler.bind(this);
         this.removeCommentHandler = this.removeCommentHandler.bind(this);
     }
@@ -33,7 +33,7 @@ class FeedbackApp extends React.Component {
     }
 
     componentWillMount() {
-        let data = cookie.load('messages');
+        let data = this.cookies.get('messages');
         if (data === undefined) {
             data = [];
         }
@@ -42,7 +42,7 @@ class FeedbackApp extends React.Component {
     }
 
     componentDidUpdate() {
-        cookie.save('messages', this.props.messages, {path: '/'});
+        this.cookies.set('messages', this.props.messages, {path: '/'});
     }
 
     render() {

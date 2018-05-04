@@ -1,4 +1,4 @@
-﻿import React from 'react';
+﻿import React, { PureComponent } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -16,7 +16,7 @@ let allImages = [
 
 ];
 
-class PortfolioApp extends React.Component {
+class PortfolioApp extends PureComponent {
     constructor(props) {
         super(props);
 

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { Link as ScrollLink, scrollSpy } from 'react-scroll';
 
 // 'react-scroll' have bugs with active class, todo: fix
 
-class Header extends React.Component {
+class Header extends PureComponent {
     constructor(props) {
         super(props);
     }

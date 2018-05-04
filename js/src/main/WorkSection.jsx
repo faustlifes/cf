@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 
 import PortfolioApp from './../containers/portfolioApp.jsx';
 
-class WorkSection extends React.Component {
+class WorkSection extends PureComponent {
     constructor(props) {
         super(props);
     }

@@ -1,6 +1,6 @@
-﻿import React from 'react';
+﻿import React, { PureComponent } from 'react';
 
-export class ServiceWeb extends React.Component {
+class ServiceWeb extends PureComponent {
     constructor(props) {
         super(props);
     }
@@ -16,7 +16,7 @@ export class ServiceWeb extends React.Component {
     }
 }
 
-export class ServiceGraphic extends React.Component {
+class ServiceGraphic extends PureComponent {
     constructor(props) {
         super(props);
     }
@@ -32,7 +32,7 @@ export class ServiceGraphic extends React.Component {
     }
 }
 
-export class ServiceSupport extends React.Component {
+class ServiceSupport extends PureComponent {
     constructor(props) {
         super(props);
     }
@@ -48,7 +48,7 @@ export class ServiceSupport extends React.Component {
     }
 }
 
-export class ServiceApp extends React.Component {
+class ServiceApp extends PureComponent {
     constructor(props) {
         super(props);
     }
@@ -65,7 +65,7 @@ export class ServiceApp extends React.Component {
 }
 
 
-export class ServiceMarketing extends React.Component {
+class ServiceMarketing extends PureComponent {
     constructor(props) {
         super(props);
     }
@@ -81,7 +81,7 @@ export class ServiceMarketing extends React.Component {
     }
 }
 
-export class ServiceSeo extends React.Component {
+class ServiceSeo extends PureComponent {
     constructor(props) {
         super(props);
     }
@@ -95,4 +95,13 @@ export class ServiceSeo extends React.Component {
             </div>
         )
     }
+}
+
+export default {
+  ServiceWeb,
+  ServiceGraphic,
+  ServiceSupport,
+  ServiceApp,
+  ServiceSeo,
+  ServiceMarketing,
 }

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 
 import SliderApp from './../containers/sliderApp.jsx';
 
-class HomeSection extends React.Component {
+class HomeSection extends PureComponent {
     constructor(props) {
         super(props);
     }
