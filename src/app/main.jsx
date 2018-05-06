@@ -5,14 +5,9 @@ import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { default as thunk } from 'redux-thunk';
 import { Switch, Route } from 'react-router';
-
-
 //------------------------------------------------------
 import Header from './main/Header.jsx';
 import Footer from './main/Footer.jsx';
-import routes from './data/routes.js'
-
-// import NewsView from './main/NewsView.jsx';
 
 //------------------------------------------------------
 import sliderReducer from './reducers/sliderReducer';
@@ -24,6 +19,7 @@ import feedbackReducer from './reducers/feedbackReducer';
 import newsReducer from './reducers/newsReducer';
 import Home from './components/Home/Home.jsx';
 import items from './components/serviceSection/ServiceItems.jsx';
+import NewsView from './main/NewsView.jsx';
 
 const reducers = combineReducers({
     slider: sliderReducer,
@@ -63,12 +59,12 @@ ReactDOM.render(
           <Switch>
             <Route
               path='/'
+              exact
               component={Home}>
             </Route>
-            <Route path='/' exact component={items.ServiceWeb} />
-            {/*{routes.map(route => (
-              <Route key={route.path} {...route} />
-            ))}*/}
+            <Route path='/news/:id' component={NewsView}/>
+            {/*<Route path='/' exact component={items.ServiceWeb} />*/}
+
           </Switch>
         </BrowserRouter>
         <Footer />

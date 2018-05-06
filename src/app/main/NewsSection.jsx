@@ -1,7 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Route } from 'react-router';
 import NewsApp from './../containers/newsApp.jsx';
-import NewsView from './NewsView.jsx';
 class NewsSection extends PureComponent {
   constructor (props) {
     super(props);
@@ -23,7 +21,6 @@ class NewsSection extends PureComponent {
             </div>
           </div>
         </section>
-        <Route path="/:id" component={NewsView}/>
       </div>
     )
   }

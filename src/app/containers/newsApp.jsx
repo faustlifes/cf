@@ -1,7 +1,6 @@
 ﻿import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
 import NewsItem from './../components/newsItem.jsx';
 
 import * as actions from '../actions/newsActions.js';
