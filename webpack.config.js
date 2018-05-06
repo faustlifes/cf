@@ -5,7 +5,7 @@ require("babel-polyfill");
 
 module.exports = {
   entry: {
-    'build/bundle': './src/app/main.jsx'
+    'public/build/bundle': './src/app/main.jsx'
   },
 
   output: {
