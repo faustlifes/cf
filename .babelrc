@@ -1,0 +1,8 @@
+{
+	"presets": ["env", "es2015", "stage-0"],
+	"plugins": ["transform-decorators-legacy"],
+	"ignore": [
+		"public/build/",
+		"node_modules/"
+	]
+}
