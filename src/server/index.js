@@ -1,7 +1,7 @@
-const express = require('express');
-const http = require('http');
-var path = require('path');
-// import http from 'http';
+import express from 'express';
+import http from 'http';
+import path from 'path';
+import apiRouter from './routes/api';
 
 const app = express();
 // set up ejs for templating. You can use whatever
@@ -14,6 +14,8 @@ const src_dir = path.join(__dirname, '../../index.html');
 const public_dir = path.join(__dirname, '../../public');
 
 app.use(express.static(public_dir));
+app.use('/api/', apiRouter);
+
 app.get('/', function(req, res){
   res.sendFile(src_dir);
 });
