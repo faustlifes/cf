@@ -24,9 +24,10 @@ class Header extends PureComponent {
                     <div className="container">
                         <div className="logo-container">
                             <ScrollLink style={{cursor: 'pointer'}} to="home" {...options} activeClass="">
-                                <span className="logo-img" />
-                                <span className="logo-text logo-text-part1">the</span>
-                                <span className="logo-text logo-text-part2">Ham</span>
+                                {/*<span className="logo-img" />*/}
+                              <img src="img/logo-cf.png" className="logo-img" />
+                                <span className="logo-text logo-text-part1">CF</span>
+                                <span className="logo-text logo-text-part2">UA</span>
                             </ScrollLink>
                         </div>
                         <nav className="nav-main">

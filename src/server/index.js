@@ -1,7 +1,6 @@
 const express = require('express');
 const http = require('http');
-var path = require('path');
-// import http from 'http';
+let path = require('path');
 
 const app = express();
 // set up ejs for templating. You can use whatever
