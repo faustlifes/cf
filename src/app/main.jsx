@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
@@ -33,7 +33,8 @@ const reducers = combineReducers({
 
 const middleware = applyMiddleware(thunk);
 const store = createStore(reducers, middleware);
-
+const container = document.getElementById('main-app');
+const root = createRoot(container);
 //------------------------------------------------------
 
 class App extends React.Component {
@@ -51,7 +52,7 @@ class App extends React.Component {
     }
 }
 
-ReactDOM.render(
+root.render(
     <Provider store={store}>
       <div>
         <Header />
@@ -83,6 +84,5 @@ ReactDOM.render(
                 <Route path="/:id" component={NewsView} />
             </Route>
         </Router>*/}
-    </Provider>,
-    document.getElementById('main-app')
+    </Provider>
 );

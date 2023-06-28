@@ -1,8 +1,5 @@
 {
-	"presets": ["env", "es2015", "stage-0"],
-	"plugins": ["transform-decorators-legacy"],
-	"ignore": [
-		"public/build/",
-		"node_modules/"
-	]
+	"presets": ["@babel/preset-env"],
+	"plugins": [  ["@babel/plugin-proposal-decorators", { "legacy": true }]],
+	"ignore": ["public/build/", "node_modules/"]
 }

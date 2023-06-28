@@ -26,20 +26,18 @@ const sliderReducer = (state = stateInitial, action) => {
                 nextSlide = state.currSlide - 1;
             }
 
-            if (nextSlide == 0 || nextSlide == slidesCount + 1) {
+            if (nextSlide === 0 || nextSlide === slidesCount + 1) {
                 hiddenChange = true;
             }
 
             return {...state, ...{hiddenChange}, currSlide: nextSlide, transitionDuration: transitionTime, sliderWidth: width};
-            break;
         }
         case 'CHANGE_SLIDE_HIDDEN': {
             let nextSlide = 1;
-            if (state.currSlide == 0) {
+            if (state.currSlide === 0) {
                 nextSlide = slidesCount;
             }
             return {...state, hiddenChange: false, currSlide: nextSlide, transitionDuration: 0, sliderWidth: width};
-            break;
         }
         default: {
             return state;

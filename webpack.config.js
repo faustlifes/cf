@@ -1,57 +1,53 @@
-﻿const webpack = require('webpack');
-const path = require('path');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+﻿const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-require("babel-polyfill");
-
-
-const extractSass = new ExtractTextPlugin({
-  filename: "scss.css",
-  disable: process.env.NODE_ENV === "development"
-});
+require('babel-polyfill');
 
 module.exports = {
   entry: {
     'public/build/bundle': './src/app/main.jsx'
   },
-
   output: {
     filename: '[name].js',
-    sourceMapFilename: "[name].js.map",
+    sourceMapFilename: '[name].js.map',
+    path: path.resolve(__dirname, ''),
   },
   devtool: 'inline-source-map',
-  /*resolve: {
-    extensions: [ '.js', '.jsx' ]
-  },*/
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
-        loader: "babel-loader",
         exclude: /node_modules/,
-        query:
-          {
-            presets: [ "es2015", "stage-0", 'react' ],
-            plugins: [ "transform-object-rest-spread", "transform-async-to-generator", "syntax-async-functions", "transform-runtime" ]
-          }
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+            plugins: ['@babel/plugin-transform-object-rest-spread', '@babel/plugin-transform-async-to-generator'],
+          },
+        },
       },
-      { test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' },
+      { test: /\.(png|woff|woff2|eot|ttf|svg)$/, type: 'asset/resource' },
       {
         test: /\.css$/,
-        loader:'style!css!'
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
         test: /\.scss$/,
-        use: extractSass.extract({
-          use: [{
-            loader: "css-loader",
-          }, {
-            loader: "sass-loader"
-          }],
-          // use style-loader in development
-          fallback: "style-loader"
-        })
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader',
+        ],
       },
-    ]
-  }
+    ],
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'scss.css',
+      ignoreOrder: true,
+    }),
+  ],
 };

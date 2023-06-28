@@ -25,7 +25,7 @@ const portfolioReducer = (state = stateInitial, action) => {
         }
         case 'REMOVE_COMMENT': {
             let messages = state.messages.filter((item) => {
-                return item.id != action.payload;
+                return item.id !== action.payload;
             });
             return {...state, messages: messages};
         }

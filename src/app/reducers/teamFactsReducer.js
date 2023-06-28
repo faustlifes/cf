@@ -18,7 +18,6 @@ const teamFactsReducer = (state = stateInitial, action) => {
                 return ~~(item / steps);
             });
             return {...state, ...{finishNumber, incValues}};
-            break;
         }
 
         case 'NEXT_VAL': {
@@ -37,7 +36,6 @@ const teamFactsReducer = (state = stateInitial, action) => {
             }
 
             return {...state, currNumber: nextNumber, ...{finished}};
-            break;
         }
 
         default: {
