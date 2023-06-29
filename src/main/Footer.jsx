@@ -17,9 +17,9 @@ class Footer extends React.Component {
         <div className='dark-bg-tone'>
           <div className='container footer-container'>
             <p className='footer-text'>
-              Copyright 2016{' '}
+              Copyright 2023{' '}
               <a className='text-highlight' href='#'>
-                theHam
+                CF-UA
               </a>{' '}
               | All Rights Reserved
             </p>

@@ -1,9 +1,9 @@
-﻿import React from 'react'
-import { createRoot } from 'react-dom/client'
+﻿import { createRoot } from 'react-dom/client'
 import { Routes, BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { createStore, combineReducers, applyMiddleware } from 'redux'
-import { default as thunk } from 'redux-thunk'
+// import { combineReducers, applyMiddleware } from 'redux'
+import { configureStore } from '@reduxjs/toolkit'
+// import { default as thunk } from 'redux-thunk'
 import { Route } from 'react-router'
 //------------------------------------------------------
 import Header from './main/Header.jsx'
@@ -20,7 +20,7 @@ import newsReducer from './reducers/newsReducer'
 import Home from './components/Home/Home.jsx'
 import NewsView from './main/NewsView.jsx'
 
-const reducers = combineReducers({
+const reducers = {
   slider: sliderReducer,
   teamFacts: teamFactsReducer,
   about: aboutReducer,
@@ -28,28 +28,13 @@ const reducers = combineReducers({
   contactForm: contactFormReducer,
   feedback: feedbackReducer,
   news: newsReducer,
-})
+}
 
-const middleware = applyMiddleware(thunk)
-const store = createStore(reducers, middleware)
+// const middleware = applyMiddleware(thunk)
+const store = configureStore({ reducer: reducers })
 const container = document.getElementById('main-app')
 const root = createRoot(container)
 //------------------------------------------------------
-
-class App extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-  render() {
-    return (
-      <div>
-        <Header />
-        {this.props.children}
-        <Footer />
-      </div>
-    )
-  }
-}
 
 root.render(
   <Provider store={store}>
@@ -57,8 +42,8 @@ root.render(
       <Header />
       <BrowserRouter>
         <Routes>
-          <Route path='/' exact component={Home}></Route>
-          <Route path='/news/:id' component={NewsView} />
+          <Route path='/' exact element={<Home />}></Route>
+          <Route path='/news/:id' element={<NewsView />} />
           {/*<Route path='/' exact component={items.ServiceWeb} />*/}
         </Routes>
       </BrowserRouter>

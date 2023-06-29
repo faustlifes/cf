@@ -10,7 +10,7 @@ class NewsApp extends React.Component {
     super(props)
   }
 
-  componentWillMount() {
+  componenDidMount() {
     if (this.props.data.length == 0) {
       this.props.fetchUsers('data/data.json')
     }
@@ -42,7 +42,7 @@ class NewsApp extends React.Component {
         id: item.id,
         title: `Amazing Post #${item.id}`,
         date: dateStr,
-        src: 'img/news-img1.jpeg',
+        src: 'assets/img/news-img1.jpeg',
       }
 
       return <NewsItem {...props} />

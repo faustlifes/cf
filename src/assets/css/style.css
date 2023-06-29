@@ -363,19 +363,19 @@ header {
 }
 
 .home-options-item:nth-child(1) > .option-item {
-	background: url("options-icon1.png") no-repeat center;
+	background: url("/assets/img/options-icon1.png") no-repeat center;
 }
 
 .home-options-item:nth-child(2) > .option-item {
-	background: url("options-icon2.png") no-repeat center;
+	background: url("/assets/img/options-icon2.png") no-repeat center;
 }
 
 .home-options-item:nth-child(3) > .option-item {
-	background: url("options-icon3.png") no-repeat center;
+	background: url("/assets/img/options-icon3.png") no-repeat center;
 }
 
 .home-options-item:nth-child(4) > .option-item {
-	background: url("options-icon4.png") no-repeat center;
+	background: url("/assets/img/options-icon4.png") no-repeat center;
 }
 
 .option-item {

@@ -15,7 +15,7 @@ class AboutSection extends React.Component {
             <div className='row'>
               <div className='col-xs-12 col-md-6 about-poster-container'>
                 <div className='about-poster'>
-                  <img src='img/about-img.jpeg' />
+                  <img src='assets/img/about-img.jpeg' />
                 </div>
               </div>
               <div className='container'>

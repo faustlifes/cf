@@ -8,7 +8,7 @@ class ServiceWeb extends PureComponent {
     return (
       <div className='service-content clearfix'>
         <div className='service-content-img'>
-          <img src='img/service-img2.jpg'  alt={}/>
+          <img src='assets/img/service-img2.jpg' alt='' />
         </div>
         <p className='service-content-text'>
           Et quot utroque oportere vel, est doctus lobortis ut. Doming
@@ -30,7 +30,7 @@ class ServiceGraphic extends PureComponent {
     return (
       <div className='service-content clearfix'>
         <div className='service-content-img'>
-          <img src='img/service-img1.jpg'  alt={}/>
+          <img src='assets/img/service-img1.jpg' alt='' />
         </div>
         <p className='service-content-text'>
           Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.
@@ -55,7 +55,7 @@ class ServiceSupport extends PureComponent {
     return (
       <div className='service-content clearfix'>
         <div className='service-content-img'>
-          <img src='img/service-img2.jpg' />
+          <img src='assets/img/service-img2.jpg' />
         </div>
         <p className='service-content-text'>
           Vivamus suscipit tortor eget felis porttitor volutpat. Curabitur
@@ -80,7 +80,7 @@ class ServiceApp extends PureComponent {
     return (
       <div className='service-content clearfix'>
         <div className='service-content-img'>
-          <img src='img/service-img1.jpg' />
+          <img src='assets/img/service-img1.jpg' />
         </div>
         <p className='service-content-text'>
           Lorem ipsum dolor sit amet, id pro dicunt audire probatus, no doming
@@ -103,7 +103,7 @@ class ServiceMarketing extends PureComponent {
     return (
       <div className='service-content clearfix'>
         <div className='service-content-img'>
-          <img src='img/service-img2.jpg' />
+          <img src='assets/img/service-img2.jpg' />
         </div>
         <p className='service-content-text'>
           Mentitum qualisque ex sed, qui quaeque docendi interpretaris in. Ut
@@ -127,7 +127,7 @@ class ServiceSeo extends PureComponent {
     return (
       <div className='service-content clearfix'>
         <div className='service-content-img'>
-          <img src='img/service-img1.jpg' />
+          <img src='assets/img/service-img1.jpg' />
         </div>
         <p className='service-content-text'>
           Habeo apeirian eos et. Dicant molestie in mel. Cu mea epicurei

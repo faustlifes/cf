@@ -48,7 +48,7 @@ class ContactFromApp extends React.Component {
         <input
           type='text'
           name='name'
-          value={this.props.nameField.text}
+          value={this.props.nameField.text || ''}
           placeholder='Name'
         />
         <span

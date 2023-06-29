@@ -12,22 +12,22 @@ class TeamSection extends React.Component {
       {
         name: 'John Doe #1',
         position: 'Designer',
-        src: 'img/team_member1.jpg',
+        src: 'assets/img/team_member1.jpg',
       },
       {
         name: 'John Doe #2',
         position: 'Developer',
-        src: 'img/team_member1.jpg',
+        src: 'assets/img/team_member1.jpg',
       },
       {
         name: 'John Doe #3',
         position: 'Designer',
-        src: 'img/team_member1.jpg',
+        src: 'assets/img/team_member1.jpg',
       },
       {
         name: 'John Doe #4',
         position: 'Developer',
-        src: 'img/team_member1.jpg',
+        src: 'assets/img/team_member1.jpg',
       },
     ]
 

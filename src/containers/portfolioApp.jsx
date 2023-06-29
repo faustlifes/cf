@@ -7,12 +7,32 @@ import PortfolioItem from '../components/portfolioItem.jsx'
 import * as actions from '../actions/portfolioActions.js'
 
 let allImages = [
-  { title: 'Image #1', category: 'Graphic Design', src: 'img/work-img1.jpg' },
-  { title: 'Image #2', category: 'Web Design', src: 'img/work-img2.jpg' },
-  { title: 'Image #3', category: 'Landing Pages', src: 'img/work-img3.jpg' },
-  { title: 'Image #4', category: 'Wordpress', src: 'img/work-img4.jpg' },
-  { title: 'Image #5', category: 'Graphic Design', src: 'img/work-img5.jpg' },
-  { title: 'Image #6', category: 'Web Design', src: 'img/work-img6.jpg' },
+  {
+    title: 'Image #1',
+    category: 'Graphic Design',
+    src: 'assets/img/work-img1.jpg',
+  },
+  {
+    title: 'Image #2',
+    category: 'Web Design',
+    src: 'assets/img/work-img2.jpg',
+  },
+  {
+    title: 'Image #3',
+    category: 'Landing Pages',
+    src: 'assets/img/work-img3.jpg',
+  },
+  { title: 'Image #4', category: 'Wordpress', src: 'assets/img/work-img4.jpg' },
+  {
+    title: 'Image #5',
+    category: 'Graphic Design',
+    src: 'assets/img/work-img5.jpg',
+  },
+  {
+    title: 'Image #6',
+    category: 'Web Design',
+    src: 'assets/img/work-img6.jpg',
+  },
 ]
 
 class PortfolioApp extends PureComponent {

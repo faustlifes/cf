@@ -30,7 +30,7 @@ class Header extends PureComponent {
                 activeClass=''
               >
                 {/*<span className="logo-img" />*/}
-                <img src='assets/img/logo-cf.png' className='logo-img'  alt={}/>
+                <img src='assets/img/logo-cf.png' className='logo-img' />
                 <span className='logo-text logo-text-part1'>CF</span>
                 <span className='logo-text logo-text-part2'>UA</span>
               </ScrollLink>
