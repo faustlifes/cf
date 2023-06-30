@@ -11,7 +11,7 @@ class NewsApp extends React.Component {
   }
 
   componenDidMount() {
-    if (this.props.data.length == 0) {
+    if (this.props.data.length === 0) {
       this.props.fetchUsers('data/data.json')
     }
   }

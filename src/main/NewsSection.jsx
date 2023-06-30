@@ -16,7 +16,7 @@ class NewsSection extends PureComponent {
                 <hr />
                 <hr />
               </div>
-              <NewsApp />
+              <NewsApp data='dddd' />
             </div>
           </div>
         </section>

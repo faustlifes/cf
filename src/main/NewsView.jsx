@@ -10,8 +10,8 @@ class NewsView extends PureComponent {
     super(props)
   }
 
-  UNSAFE_componentWillMount() {
-    if (this.props.data.length == 0) {
+  componentDidMount() {
+    if (this.props.data.length === 0) {
       this.props.fetchUsers('data/data.json')
     }
   }
