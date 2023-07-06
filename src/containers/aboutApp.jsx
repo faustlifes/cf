@@ -1,29 +1,16 @@
-﻿import React from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-
+﻿import { useDispatch, useSelector } from 'react-redux'
 import SkillsBlock from '../components/aboutSection/skillsBlock.jsx'
 import BiographyBlock from '../components/aboutSection/biographyBlock.jsx'
 import HistoryBlock from '../components/aboutSection/historyBlock.jsx'
+import { showView, showSkillsEnable } from '../actions/aboutActions'
+import { useEffect } from 'react'
 
-import * as actions from '../actions/aboutActions.js'
+const AboutApp = () => {
+  const dispatch = useDispatch()
+  const currView = useSelector((state) => state.about.currView)
+  const skillsShow = useSelector((state) => state.about.skillsShow)
 
-class AboutApp extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.scrollHandler = this.scrollHandler.bind(this)
-  }
-
-  componentDidMount() {
-    document.addEventListener('scroll', this.scrollHandler)
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('scroll', this.scrollHandler)
-  }
-
-  scrollHandler(e) {
+  const scrollHandler = () => {
     let top = document.querySelector('#about-block').getBoundingClientRect().top
     let bottom = document
       .querySelector('#about-block')
@@ -34,68 +21,55 @@ class AboutApp extends React.Component {
       top <= document.documentElement.clientHeight &&
       bottom >= headerOffset
     ) {
-      document.removeEventListener('scroll', this.scrollHandler)
-      this.props.showSkillsEnable()
+      document.removeEventListener('scroll', scrollHandler)
+      dispatch(showSkillsEnable())
     }
   }
 
-  render() {
-    let viewBlock = <SkillsBlock />
+  useEffect(() => {
+    document.addEventListener('scroll', scrollHandler)
 
-    switch (this.props.currView) {
-      case 0:
-        viewBlock = <HistoryBlock />
-        break
-      case 1:
-        viewBlock = <BiographyBlock />
-        break
-      case 2:
-        viewBlock = <SkillsBlock show={this.props.skillsShow} />
-        break
+    return () => {
+      document.removeEventListener('scroll', scrollHandler)
     }
+  }, [])
 
-    let links = ['Out history', 'Our biography', 'Our skills'].map(
-      (item, index) => {
-        let classes = `about-nav-item ${
-          this.props.currView === index ? 'active' : ''
-        }`
+  let viewBlock = <SkillsBlock />
 
-        return (
-          <li
-            key={index}
-            className={classes}
-            onClick={() => this.props.showView(index)}
-          >
-            {item}
-          </li>
-        )
-      }
-    )
-
-    return (
-      <div id='about-block'>
-        <ul className='about-nav'>{links}</ul>
-        {viewBlock}
-      </div>
-    )
+  switch (currView) {
+    case 0:
+      viewBlock = <HistoryBlock />
+      break
+    case 1:
+      viewBlock = <BiographyBlock />
+      break
+    case 2:
+      viewBlock = <SkillsBlock show={skillsShow} />
+      break
   }
-}
 
-function mapStateToProps(state) {
-  return {
-    currView: state.about.currView,
-    skillsShow: state.about.skillsShow,
-  }
-}
+  const links = ['Out history', 'Our biography', 'Our skills'].map(
+    (item, index) => {
+      const classes = `about-nav-item ${currView === index ? 'active' : ''}`
 
-function matchDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      showView: actions.showView,
-      showSkillsEnable: actions.showSkillsEnable,
-    },
-    dispatch
+      return (
+        <li
+          key={index}
+          className={classes}
+          onClick={() => dispatch(showView(index))}
+        >
+          {item}
+        </li>
+      )
+    }
+  )
+
+  return (
+    <div id='about-block'>
+      <ul className='about-nav'>{links}</ul>
+      {viewBlock}
+    </div>
   )
 }
 
-export default connect(mapStateToProps, matchDispatchToProps)(AboutApp)
+export default AboutApp
