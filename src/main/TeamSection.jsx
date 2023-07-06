@@ -31,6 +31,14 @@ class TeamSection extends React.Component {
       },
     ]
 
+    const teamFacts = {
+      currNumber: [4609, 3470, 2908, 1908],
+      finished: false,
+      initOptions: () => {},
+      startCount: () => {},
+      stopCount: () => {},
+    }
+
     let team = teamData.map((item, index) => {
       return (
         <TeamMember
@@ -53,7 +61,7 @@ class TeamSection extends React.Component {
             </div>
             <div className='row'>{team}</div>
           </div>
-          <TeamFactsApp />
+          <TeamFactsApp {...teamFacts} />
         </div>
       </section>
     )

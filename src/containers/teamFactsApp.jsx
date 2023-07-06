@@ -1,12 +1,8 @@
-﻿import React from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-
+﻿import { useEffect } from 'react'
+import PropTypes from 'prop-types'
 import TeamFactsItem from '../components/teamFactsItem.jsx'
 
-import * as actions from '../actions/teamFactsActions.js'
-
-let data = [
+const data = [
   {
     title: 'Works',
     number: 4609,
@@ -29,80 +25,59 @@ let data = [
   },
 ]
 
-class TeamFactsApp extends React.Component {
-  constructor(props) {
-    super(props)
+const TeamFactsApp = ({ finished, initOptions, startCount, stopCount }) => {
+  useEffect(() => {
+    initOptions(data.map((item) => item.number))
+    document.addEventListener('scroll', scrollHandler)
 
-    this.scrollHandler = this.scrollHandler.bind(this)
-  }
+    return () => {
+      document.removeEventListener('scroll', scrollHandler)
+    }
+  }, [])
 
-  componentWillMount() {
-    this.props.initOptions(
-      data.map((item) => {
-        return item.number
-      })
-    )
-  }
-
-  componentDidMount() {
-    document.addEventListener('scroll', this.scrollHandler)
-  }
-
-  scrollHandler(e) {
+  const scrollHandler = () => {
     if (!document.querySelector('.team-facts')) {
       return
     }
-    let top = document.querySelector('.team-facts').getBoundingClientRect().top
-    let bottom = document
+
+    const top = document
+      .querySelector('.team-facts')
+      .getBoundingClientRect().top
+    const bottom = document
       .querySelector('.team-facts')
       .getBoundingClientRect().bottom
-    let headerOffset = 100
+    const headerOffset = 100
 
     if (
       top <= document.documentElement.clientHeight &&
       bottom >= headerOffset
     ) {
-      document.removeEventListener('scroll', this.scrollHandler)
-      this.props.startCount(100)
+      document.removeEventListener('scroll', scrollHandler)
+      startCount(100)
     }
   }
 
-  render() {
-    if (this.props.finished) {
-      this.props.stopCount()
-    }
-
-    let items = data.map((item, index) => {
-      return (
-        <TeamFactsItem
-          key={index}
-          title={item.title}
-          number={this.props.currNumber[index]}
-          favicon={item.favicon}
-        />
-      )
-    })
-
-    return <ul className='team-facts clearfix'>{items}</ul>
+  if (finished) {
+    stopCount()
   }
+
+  const items = data.map((item, index) => (
+    <TeamFactsItem
+      key={index}
+      title={item.title}
+      number={item.number}
+      favicon={item.favicon}
+    />
+  ))
+
+  return <ul className='team-facts clearfix'>{items}</ul>
 }
 
-function mapStateToProps(state) {
-  return {
-    currNumber: state.teamFacts.currNumber,
-    finished: state.teamFacts.finished,
-  }
+TeamFactsApp.propTypes = {
+  finished: PropTypes.bool,
+  initOptions: PropTypes.func,
+  startCount: PropTypes.func,
+  stopCount: PropTypes.func,
 }
 
-function matchDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      initOptions: actions.initOptions,
-      startCount: actions.startCount,
-      stopCount: actions.stopCount,
-    },
-    dispatch
-  )
-}
-
-export default connect(mapStateToProps, matchDispatchToProps)(TeamFactsApp)
+export default TeamFactsApp
