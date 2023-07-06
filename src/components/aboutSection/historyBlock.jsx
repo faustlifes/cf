@@ -19,7 +19,7 @@ class HistoryBlock extends React.Component {
       onChange: this.onChange,
       listType: 'picture',
       fileList: this.state.responseList,
-      data: (file) => {},
+      data: () => {},
       multiple: true,
       beforeUpload: this.beforeUpload,
       showUploadList: true,
