@@ -1,6 +1,7 @@
 node_modules
-.idea/
-build
-public/build
-npm-debug.log
-yarn-error.log
+dist
+stats.json
+.DS_Store
+package-lock.json
+# jetbrains
+.idea
