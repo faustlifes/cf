@@ -1,8 +1,6 @@
 ﻿import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import SliderItem1 from '../components/slider/sliderItem1.jsx'
-import SliderItem2 from '../components/slider/sliderItem2.jsx'
-import SliderItem3 from '../components/slider/sliderItem3.jsx'
+import SliderItem from '../components/slider/sliderItem.jsx'
 import {
   switchToSlide,
   switchTimeoutHidden,
@@ -10,6 +8,43 @@ import {
   switchAutoEnable,
 } from '../actions/sliderActions'
 
+const slidersInfo = [
+  {
+    img: 'assets//img/home-bg1.jpg',
+    title1: '#1 The ham is',
+    title2: 'a psd template',
+    subTitle: 'We are creative',
+    text: 'Nam varius accumsan elementum aliquam',
+  },
+  {
+    img: 'assets//img/home-bg.jpg',
+    title1: '#2 The ham is',
+    title2: 'a psd template',
+    subTitle: 'We are fast',
+    text: 'Lorem ipsum dolor sit amet, his ea.',
+  },
+  {
+    img: 'assets//img/home-bg2.jpg',
+    title1: '#3 The ham is',
+    title2: 'a psd template',
+    subTitle: 'We are fast',
+    text: '2Lorem ipsum dolor sit amet, his ea.',
+  },
+  {
+    img: 'assets//img/home-bg3.jpg',
+    title1: '#4 The ham is',
+    title2: 'a psd template',
+    subTitle: 'We are professionals',
+    text: '2Zril mandamus eos ne, sed audire facilisis ex',
+  },
+  {
+    img: 'assets//img/home-bg1.jpg',
+    title1: '#5 The ham is',
+    title2: 'a psd template',
+    subTitle: 'We are professionals',
+    text: 'Zril mandamus eos ne, sed audire facilisis ex',
+  },
+]
 const SliderApp = () => {
   const dispatch = useDispatch()
   const currSlide = useSelector((state) => state.slider.currSlide)
@@ -47,6 +82,16 @@ const SliderApp = () => {
     transform: `translate3d(${-sliderOffset}px, 0px, 0px)`,
     transitionDuration: `${transitionDuration}ms`,
   }
+  const items = slidersInfo.map((item, index) => (
+    <SliderItem
+      key={index}
+      title1={item.title1}
+      title2={item.title2}
+      subTitle={item.subTitle}
+      text={item.text}
+      img={item.img}
+    />
+  ))
 
   return (
     <div className='slider-container'>
@@ -61,11 +106,7 @@ const SliderApp = () => {
         </div>
       </div>
       <ul style={sliderOptions} className='slider'>
-        <SliderItem3 />
-        <SliderItem1 />
-        <SliderItem2 />
-        <SliderItem3 />
-        <SliderItem1 />
+        {items}
       </ul>
     </div>
   )
