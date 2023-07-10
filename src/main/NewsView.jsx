@@ -6,13 +6,13 @@ import { fetchUsers } from '../actions/newsActions'
 const NewsView = () => {
   const { id } = useParams()
   const data = useSelector((state) =>
-    state.news.data.find((item) => item.id === id)
+    state.news.data.find((item) => item.id === +id)
   )
   const dispatch = useDispatch()
 
   useEffect(() => {
     if (!data) {
-      dispatch(fetchUsers('data/data.json'))
+      dispatch(fetchUsers('/assets/data/data.json'))
     }
   }, [])
 
