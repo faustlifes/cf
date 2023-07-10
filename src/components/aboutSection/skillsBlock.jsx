@@ -1,6 +1,6 @@
-﻿import React from 'react'
+﻿import PropTypes from 'prop-types'
 
-let data = [
+const data = [
   { text: 'User interface', width: '75%', backgroundColor: '#9c5da5' },
   { text: 'Web design', width: '85%', backgroundColor: '#11b0de' },
   { text: 'Wordpress', width: '70%', backgroundColor: '#d67f7f' },
@@ -8,30 +8,25 @@ let data = [
   { text: 'App design', width: '85%', backgroundColor: '#bb8a36' },
 ]
 
-class SkillsBlock extends React.Component {
-  constructor(props) {
-    super(props)
-  }
+const SkillsBlock = ({ show = true }) => {
+  const items = data.map((item, index) => (
+    <div key={index} className='skills-diagram-container'>
+      <div
+        className='skills-diagram'
+        style={{
+          width: show ? item.width : 0,
+          backgroundColor: item.backgroundColor,
+        }}
+      >
+        {item.text}
+      </div>
+    </div>
+  ))
 
-  render() {
-    let items = data.map((item, index) => {
-      return (
-        <div key={index} className='skills-diagram-container'>
-          <div
-            className='skills-diagram'
-            style={{
-              width: this.props.show ? item.width : 0,
-              backgroundColor: item.backgroundColor,
-            }}
-          >
-            {item.text}
-          </div>
-        </div>
-      )
-    })
-
-    return <div className='about-content'>{items}</div>
-  }
+  return <div className='about-content'>{items}</div>
 }
 
+SkillsBlock.propTypes = {
+  show: PropTypes.bool,
+}
 export default SkillsBlock

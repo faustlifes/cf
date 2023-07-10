@@ -1,69 +1,44 @@
-import { PureComponent } from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useParams } from 'react-router-dom'
+import { fetchUsers } from '../actions/newsActions'
 
-import * as actions from '../actions/newsActions.js'
+const NewsView = () => {
+  const { id } = useParams()
+  const data = useSelector((state) =>
+    state.news.data.find((item) => item.id === id)
+  )
+  const dispatch = useDispatch()
 
-class NewsView extends PureComponent {
-  constructor(props) {
-    super(props)
-  }
-
-  componentDidMount() {
-    if (this.props.data.length === 0) {
-      this.props.fetchUsers('data/data.json')
+  useEffect(() => {
+    if (!data) {
+      dispatch(fetchUsers('data/data.json'))
     }
-  }
+  }, [])
 
-  render() {
-    let id = this.props.match.params.id
-
-    let data = this.props.data.filter((item) => {
-      return item.id == id
-    })[0]
-
-    if (!data) data = {}
-
-    return (
-      <section>
-        <div
-          className='light-bg'
-          style={{ paddingTop: '100px', height: '100vh' }}
-        >
-          <div className='container'>
-            <div className='title-content'>
-              <h1>{`Amazing Post #${id}`}</h1>
-              <hr />
-              <hr />
-            </div>
-            <h3>Date: {data.date}</h3>
-            <p>{data.text}</p>
-            <div className='news-btn-container'>
-              <Link to='/'>
-                <span className='btn news-load-btn'>Back</span>
-              </Link>
-            </div>
+  return (
+    <section>
+      <div
+        className='light-bg'
+        style={{ paddingTop: '100px', height: '100vh' }}
+      >
+        <div className='container'>
+          <div className='title-content'>
+            <h1>{`Amazing Post #${id}`}</h1>
+            <hr />
+            <hr />
+          </div>
+          <h3>Date: {data?.date}</h3>
+          <p>{data?.text}</p>
+          <div className='news-btn-container'>
+            <Link to='/'>
+              <span className='btn news-load-btn'>Back</span>
+            </Link>
           </div>
         </div>
-      </section>
-    )
-  }
-}
-
-function mapStateToProps(state) {
-  return {
-    data: state.news.data,
-  }
-}
-
-function matchDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      fetchUsers: actions.fetchUsers,
-    },
-    dispatch
+      </div>
+    </section>
   )
 }
 
-export default connect(mapStateToProps, matchDispatchToProps)(NewsView)
+export default NewsView
