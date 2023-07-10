@@ -13,7 +13,7 @@
   "license": "MIT",
   "name": "cf-ua",
   "version": "0.0.5",
-  "description": "It's web application for Cystic Fibrosis association of Ukraine",
+  "description": "It's future web client for Cystic Fibrosis association of Ukraine",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^0.21.2",
