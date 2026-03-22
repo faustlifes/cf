@@ -1,4 +1,4 @@
-﻿import React, { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import NewsItem from '../components/newsItem.jsx'
 import { fetchUsers, showMore } from '../actions/newsActions'
@@ -35,7 +35,6 @@ const NewsApp = () => {
     let date = new Date(item.date)
     let dateStr = `${date.getDate()} ${monthNames[date.getMonth()]}`
     let props = {
-      key: item.id,
       id: item.id,
       title: `Amazing Post #${item.id}`,
       date: dateStr,

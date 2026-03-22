@@ -1,37 +1,22 @@
-﻿import React from 'react'
-import LzEditor from 'react-lz-editor'
+import React from 'react'
+import ModernEditor from '../common/ModernEditor.jsx'
 
 class HistoryBlock extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       htmlContent: '',
-      responseList: [],
     }
   }
   receiveHtml = (content) => {
     console.log('recieved HTML content', content)
-    this.setState({ responseList: [] })
   }
   render() {
-    const uploadProps = {
-      action: 'http://v0.api.upyun.com/devopee',
-      onChange: this.onChange,
-      listType: 'picture',
-      fileList: this.state.responseList,
-      data: () => {},
-      multiple: true,
-      beforeUpload: this.beforeUpload,
-      showUploadList: true,
-    }
     return (
       <div className='about-content'>
-        <LzEditor
-          active={true}
+        <ModernEditor
           importContent={this.state.htmlContent}
           cbReceiver={this.receiveHtml}
-          uploadProps={uploadProps}
-          lang='en'
         />
         {/*<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum quis mauris interdum, blandit nulla at, bibendum velit. Donec tristique, tortor cursus posuere aliquam</p>
                 <ul className="about-content-list">
