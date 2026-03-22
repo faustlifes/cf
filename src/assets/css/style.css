@@ -175,7 +175,7 @@ header {
 	margin: 0;
 	padding: 0;
 	height: 100%;
-	width: 500%;
+	width: 700%;
 	/*line-height: 0;*/
 }
 
@@ -189,7 +189,7 @@ header {
 .slider-item {
 	float: left;
 	display: inline-block;
-	width: 20%;
+	width: 14.285714%;
 	height: 100%;
 	/*line-height: 1.5;*/
 }

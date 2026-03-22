@@ -1,4 +1,4 @@
-﻿const slidesCount = 3
+const slidesCount = 5
 const transitionTime = 1000
 
 let stateInitial = {
@@ -15,7 +15,7 @@ const sliderReducer = (state = stateInitial, action) => {
     case 'CHANGE_SLIDE': {
       let hiddenChange = false
 
-      if (action.payload !== 'prev' && action.payload !== 'next') {
+      if (action.payload !== undefined && action.payload !== 'prev' && action.payload !== 'next') {
         console.error(
           "Slider error: invalid direction, default slider direction is 'next'."
         )

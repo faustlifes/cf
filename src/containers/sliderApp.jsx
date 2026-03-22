@@ -1,4 +1,4 @@
-﻿import { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import SliderItem from '../components/slider/sliderItem.jsx'
 import {
@@ -10,14 +10,14 @@ import {
 
 const slidersInfo = [
   {
-    img: 'assets//img/home-bg1.jpg',
+    img: 'assets//img/home-bg.jpg',
     title1: '#1 The ham is',
     title2: 'a psd template',
     subTitle: 'We are creative',
     text: 'Nam varius accumsan elementum aliquam',
   },
   {
-    img: 'assets//img/home-bg.jpg',
+    img: 'assets//img/home-bg1.jpg',
     title1: '#2 The ham is',
     title2: 'a psd template',
     subTitle: 'We are fast',
@@ -38,7 +38,7 @@ const slidersInfo = [
     text: '2Zril mandamus eos ne, sed audire facilisis ex',
   },
   {
-    img: 'assets//img/home-bg1.jpg',
+    img: 'assets//img/home-bg4.jpg',
     title1: '#5 The ham is',
     title2: 'a psd template',
     subTitle: 'We are professionals',
@@ -82,16 +82,22 @@ const SliderApp = () => {
     transform: `translate3d(${-sliderOffset}px, 0px, 0px)`,
     transitionDuration: `${transitionDuration}ms`,
   }
-  const items = slidersInfo.map((item, index) => (
+  const items = [
     <SliderItem
-      key={index}
-      title1={item.title1}
-      title2={item.title2}
-      subTitle={item.subTitle}
-      text={item.text}
-      img={item.img}
-    />
-  ))
+      key='clone-last'
+      {...slidersInfo[slidersInfo.length - 1]}
+    />,
+    ...slidersInfo.map((item, index) => (
+      <SliderItem
+        key={index}
+        {...item}
+      />
+    )),
+    <SliderItem
+      key='clone-first'
+      {...slidersInfo[0]}
+    />,
+  ]
 
   return (
     <div className='slider-container'>
