@@ -1,15 +1,14 @@
-﻿import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
-const data = [
-  { text: 'User interface', width: '75%', backgroundColor: '#9c5da5' },
-  { text: 'Web design', width: '85%', backgroundColor: '#11b0de' },
-  { text: 'Wordpress', width: '70%', backgroundColor: '#d67f7f' },
-  { text: 'HTML & CSS', width: '90%', backgroundColor: '#20bc9d' },
-  { text: 'App design', width: '85%', backgroundColor: '#bb8a36' },
-]
-
-const SkillsBlock = ({ show = true }) => {
-  const items = data.map((item, index) => (
+const SkillsBlock = ({ show = true, data = [] }) => {
+  const defaultData = [
+    { text: 'User interface', width: '75%', backgroundColor: '#9c5da5' },
+    { text: 'Web design', width: '85%', backgroundColor: '#11b0de' },
+    { text: 'Wordpress', width: '70%', backgroundColor: '#d67f7f' },
+    { text: 'HTML & CSS', width: '90%', backgroundColor: '#20bc9d' },
+    { text: 'App design', width: '85%', backgroundColor: '#bb8a36' },
+  ]
+  const items = (data.length > 0 ? data : defaultData).map((item, index) => (
     <div key={index} className='skills-diagram-container'>
       <div
         className='skills-diagram'

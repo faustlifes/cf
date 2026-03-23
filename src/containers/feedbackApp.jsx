@@ -1,4 +1,4 @@
-﻿import { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Cookies from 'universal-cookie'
 import FeedbackItem from '../components/feedbackItem.jsx'
@@ -6,6 +6,7 @@ import {
   addComment,
   removeComment,
   initComments,
+  fetchFeedbacks,
 } from '../actions/feedbackActions'
 
 const FeedbackApp = () => {
@@ -32,17 +33,8 @@ const FeedbackApp = () => {
   }
 
   useEffect(() => {
-    let data = cookies.get('messages')
-    if (data === undefined) {
-      data = []
-    }
-
-    dispatch(initComments(data))
-  }, [])
-
-  useEffect(() => {
-    cookies.set('messages', messages, { path: '/' })
-  }, [messages])
+    dispatch(fetchFeedbacks())
+  }, [dispatch])
 
   const items = messages.map((item, index) => (
     <FeedbackItem

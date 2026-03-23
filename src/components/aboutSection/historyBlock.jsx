@@ -15,7 +15,7 @@ class HistoryBlock extends React.Component {
     return (
       <div className='about-content'>
         <ModernEditor
-          importContent={this.state.htmlContent}
+          importContent={this.props.data || this.state.htmlContent}
           cbReceiver={this.receiveHtml}
         />
         {/*<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum quis mauris interdum, blandit nulla at, bibendum velit. Donec tristique, tortor cursus posuere aliquam</p>

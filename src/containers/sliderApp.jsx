@@ -6,45 +6,9 @@ import {
   switchTimeoutHidden,
   switchAuto,
   switchAutoEnable,
+  fetchSliders,
 } from '../actions/sliderActions'
 
-const slidersInfo = [
-  {
-    img: 'assets//img/home-bg.jpg',
-    title1: '#1 The ham is',
-    title2: 'a psd template',
-    subTitle: 'We are creative',
-    text: 'Nam varius accumsan elementum aliquam',
-  },
-  {
-    img: 'assets//img/home-bg1.jpg',
-    title1: '#2 The ham is',
-    title2: 'a psd template',
-    subTitle: 'We are fast',
-    text: 'Lorem ipsum dolor sit amet, his ea.',
-  },
-  {
-    img: 'assets//img/home-bg2.jpg',
-    title1: '#3 The ham is',
-    title2: 'a psd template',
-    subTitle: 'We are fast',
-    text: '2Lorem ipsum dolor sit amet, his ea.',
-  },
-  {
-    img: 'assets//img/home-bg3.jpg',
-    title1: '#4 The ham is',
-    title2: 'a psd template',
-    subTitle: 'We are professionals',
-    text: '2Zril mandamus eos ne, sed audire facilisis ex',
-  },
-  {
-    img: 'assets//img/home-bg4.jpg',
-    title1: '#5 The ham is',
-    title2: 'a psd template',
-    subTitle: 'We are professionals',
-    text: 'Zril mandamus eos ne, sed audire facilisis ex',
-  },
-]
 const SliderApp = () => {
   const dispatch = useDispatch()
   const currSlide = useSelector((state) => state.slider.currSlide)
@@ -53,8 +17,10 @@ const SliderApp = () => {
   )
   const sliderWidth = useSelector((state) => state.slider.sliderWidth)
   const hiddenChange = useSelector((state) => state.slider.hiddenChange)
+  const slidersInfo = useSelector((state) => state.slider.slidersInfo) || []
 
   useEffect(() => {
+    dispatch(fetchSliders())
     dispatch(switchAuto())
     return () => {
       dispatch(switchToSlide())
@@ -82,7 +48,7 @@ const SliderApp = () => {
     transform: `translate3d(${-sliderOffset}px, 0px, 0px)`,
     transitionDuration: `${transitionDuration}ms`,
   }
-  const items = [
+  const items = slidersInfo.length > 0 ? [
     <SliderItem
       key='clone-last'
       {...slidersInfo[slidersInfo.length - 1]}
@@ -97,7 +63,7 @@ const SliderApp = () => {
       key='clone-first'
       {...slidersInfo[0]}
     />,
-  ]
+  ] : []
 
   return (
     <div className='slider-container'>

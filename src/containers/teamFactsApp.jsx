@@ -1,39 +1,27 @@
-﻿import { useEffect } from 'react'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
+import { fetchTeamFacts } from '../actions/teamFactsActions'
 import TeamFactsItem from '../components/teamFactsItem.jsx'
 
-const data = [
-  {
-    title: 'Works',
-    number: 4609,
-    favicon: <i className='fa fa-briefcase fa-2x' />,
-  },
-  {
-    title: 'Customers',
-    number: 3470,
-    favicon: <i className='fa fa-user fa-2x' />,
-  },
-  {
-    title: 'Purchase',
-    number: 2908,
-    favicon: <i className='fa fa-shopping-cart fa-2x' />,
-  },
-  {
-    title: 'Office',
-    number: 1908,
-    favicon: <i className='fa fa-map-marker fa-2x' />,
-  },
-]
-
 const TeamFactsApp = ({ finished, initOptions, startCount, stopCount }) => {
+  const dispatch = useDispatch()
+  const teamFactsData = useSelector((state) => state.teamFacts.teamFactsData) || []
+
   useEffect(() => {
-    initOptions(data.map((item) => item.number))
+    dispatch(fetchTeamFacts())
     document.addEventListener('scroll', scrollHandler)
 
     return () => {
       document.removeEventListener('scroll', scrollHandler)
     }
-  }, [])
+  }, [dispatch])
+
+  useEffect(() => {
+    if (teamFactsData && teamFactsData.length > 0) {
+      initOptions(teamFactsData.map((item) => item.number))
+    }
+  }, [teamFactsData, initOptions])
 
   const scrollHandler = () => {
     if (!document.querySelector('.team-facts')) {
@@ -61,12 +49,19 @@ const TeamFactsApp = ({ finished, initOptions, startCount, stopCount }) => {
     stopCount()
   }
 
-  const items = data.map((item, index) => (
+  const defaultFavicons = [
+    <i className='fa fa-briefcase fa-2x' />,
+    <i className='fa fa-user fa-2x' />,
+    <i className='fa fa-shopping-cart fa-2x' />,
+    <i className='fa fa-map-marker fa-2x' />
+  ];
+
+  const items = teamFactsData.map((item, index) => (
     <TeamFactsItem
       key={index}
       title={item.title}
       number={item.number}
-      favicon={item.favicon}
+      favicon={item.favicon ? <i className={`fa ${item.favicon} fa-2x`} /> : defaultFavicons[index % defaultFavicons.length]}
     />
   ))
 

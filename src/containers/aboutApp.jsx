@@ -1,14 +1,15 @@
-﻿import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import SkillsBlock from '../components/aboutSection/skillsBlock.jsx'
 import BiographyBlock from '../components/aboutSection/biographyBlock.jsx'
 import HistoryBlock from '../components/aboutSection/historyBlock.jsx'
-import { showView, showSkillsEnable } from '../actions/aboutActions'
+import { showView, showSkillsEnable, fetchAbouts } from '../actions/aboutActions'
 import { useEffect } from 'react'
 
 const AboutApp = () => {
   const dispatch = useDispatch()
   const currView = useSelector((state) => state.about.currView)
   const skillsShow = useSelector((state) => state.about.skillsShow)
+  const aboutData = useSelector((state) => state.about.aboutData) || {}
 
   const scrollHandler = () => {
     let top = document.querySelector('#about-block').getBoundingClientRect().top
@@ -27,24 +28,25 @@ const AboutApp = () => {
   }
 
   useEffect(() => {
+    dispatch(fetchAbouts())
     document.addEventListener('scroll', scrollHandler)
 
     return () => {
       document.removeEventListener('scroll', scrollHandler)
     }
-  }, [])
+  }, [dispatch])
 
-  let viewBlock = <SkillsBlock />
+  let viewBlock = <SkillsBlock data={aboutData.skills} />
 
   switch (currView) {
     case 0:
-      viewBlock = <HistoryBlock />
+      viewBlock = <HistoryBlock data={aboutData.history} />
       break
     case 1:
-      viewBlock = <BiographyBlock />
+      viewBlock = <BiographyBlock data={aboutData.biography} />
       break
     case 2:
-      viewBlock = <SkillsBlock show={skillsShow} />
+      viewBlock = <SkillsBlock show={skillsShow} data={aboutData.skills} />
       break
   }
 

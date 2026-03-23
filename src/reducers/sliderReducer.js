@@ -6,6 +6,7 @@ let stateInitial = {
   transitionDuration: transitionTime,
   sliderWidth: document.documentElement.clientWidth,
   hiddenChange: false,
+  slidersInfo: [],
 }
 
 const sliderReducer = (state = stateInitial, action) => {
@@ -25,8 +26,10 @@ const sliderReducer = (state = stateInitial, action) => {
       if (action.payload === 'prev') {
         nextSlide = state.currSlide - 1
       }
+      
+      let currentSlidesCount = state.slidersInfo ? state.slidersInfo.length : 0
 
-      if (nextSlide === 0 || nextSlide === slidesCount + 1) {
+      if (nextSlide === 0 || nextSlide === currentSlidesCount + 1) {
         hiddenChange = true
       }
 
@@ -39,9 +42,10 @@ const sliderReducer = (state = stateInitial, action) => {
       }
     }
     case 'CHANGE_SLIDE_HIDDEN': {
+      let currentSlidesCount = state.slidersInfo ? state.slidersInfo.length : 0
       let nextSlide = 1
       if (state.currSlide === 0) {
-        nextSlide = slidesCount
+        nextSlide = currentSlidesCount
       }
       return {
         ...state,
@@ -49,6 +53,12 @@ const sliderReducer = (state = stateInitial, action) => {
         currSlide: nextSlide,
         transitionDuration: 0,
         sliderWidth: width,
+      }
+    }
+    case 'FETCH_SLIDERS_SUCCESS': {
+      return {
+        ...state,
+        slidersInfo: action.payload,
       }
     }
     default: {

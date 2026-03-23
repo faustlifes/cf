@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import NewsItem from '../components/newsItem.jsx'
-import { fetchUsers, showMore } from '../actions/newsActions'
+import { fetchNews, showMore } from '../actions/newsActions'
 
 const NewsApp = () => {
   const dispatch = useDispatch()
@@ -10,7 +10,7 @@ const NewsApp = () => {
 
   useEffect(() => {
     if (data.length === 0) {
-      dispatch(fetchUsers('assets/data/data.json'))
+      dispatch(fetchNews('/api/news'))
     }
   }, [])
 
@@ -36,7 +36,7 @@ const NewsApp = () => {
     let dateStr = `${date.getDate()} ${monthNames[date.getMonth()]}`
     let props = {
       id: item.id,
-      title: `Amazing Post #${item.id}`,
+      title: item.title || `Amazing Post #${item.id}`,
       date: dateStr,
       src: 'assets/img/news-img1.jpeg',
     }

@@ -1,39 +1,16 @@
-﻿import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import PortfolioItem from '../components/portfolioItem.jsx'
-import { changeLink } from '../actions/portfolioActions'
-
-const allImages = [
-  {
-    title: 'Image #1',
-    category: 'Graphic Design',
-    src: 'assets/img/work-img1.jpg',
-  },
-  {
-    title: 'Image #2',
-    category: 'Web Design',
-    src: 'assets/img/work-img2.jpg',
-  },
-  {
-    title: 'Image #3',
-    category: 'Landing Pages',
-    src: 'assets/img/work-img3.jpg',
-  },
-  { title: 'Image #4', category: 'Wordpress', src: 'assets/img/work-img4.jpg' },
-  {
-    title: 'Image #5',
-    category: 'Graphic Design',
-    src: 'assets/img/work-img5.jpg',
-  },
-  {
-    title: 'Image #6',
-    category: 'Web Design',
-    src: 'assets/img/work-img6.jpg',
-  },
-]
+import { changeLink, fetchPortfolio } from '../actions/portfolioActions'
+import { useEffect } from 'react'
 
 const PortfolioApp = () => {
   const dispatch = useDispatch()
   const currLink = useSelector((state) => state.portfolio.currLink)
+  const portfolioData = useSelector((state) => state.portfolio.portfolioData) || []
+
+  useEffect(() => {
+    dispatch(fetchPortfolio())
+  }, [dispatch])
 
   let categories = [
     'All',
@@ -44,10 +21,10 @@ const PortfolioApp = () => {
   ]
 
   let currCat = categories[currLink]
-  let currImages = allImages
+  let currImages = portfolioData
 
   if (currCat !== 'All') {
-    currImages = allImages.filter((item) => currCat === item.category)
+    currImages = portfolioData.filter((item) => currCat === item.category)
   }
 
   let items = currImages.map((item, index) => (

@@ -1,4 +1,6 @@
-﻿let countTimerId
+import axios from 'axios'
+
+let countTimerId
 
 export const initOptions = (data) => {
   return {
@@ -26,4 +28,15 @@ export const stopCount = () => {
     }
     dispatch({ type: 'FINISHED' })
   }
+}
+
+export const fetchTeamFacts = () => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get('/api/team-facts');
+      dispatch({ type: 'FETCH_TEAM_FACTS_SUCCESS', payload: response.data });
+    } catch (error) {
+      console.error('Error fetching team facts', error);
+    }
+  };
 }

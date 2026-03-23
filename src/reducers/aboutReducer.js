@@ -1,6 +1,7 @@
-﻿let stateInitial = {
+let stateInitial = {
   currView: 2,
   skillsShow: false,
+  aboutData: {},
 }
 
 const aboutReducer = (state = stateInitial, action) => {
@@ -10,6 +11,9 @@ const aboutReducer = (state = stateInitial, action) => {
     }
     case 'SHOW_SKILLS': {
       return { ...state, skillsShow: true }
+    }
+    case 'FETCH_ABOUT_SUCCESS': {
+      return { ...state, aboutData: action.payload }
     }
     default: {
       return state
