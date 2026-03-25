@@ -31,9 +31,9 @@ const NewsView = () => {
           <h3>Date: {data?.date}</h3>
           <p>{data?.text}</p>
           <div className='news-btn-container'>
-            <Link to='/'>
-              <span className='btn news-load-btn'>Back</span>
-            </Link>
+            <Link to='/#news'>
+               <span className='btn news-load-btn'>Back</span>
+             </Link>
           </div>
         </div>
       </div>
