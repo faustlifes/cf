@@ -1,10 +1,12 @@
-﻿export const showMore = () => {
+import axios from 'axios'
+
+export const showMore = () => {
   return {
     type: 'SHOW_MORE',
   }
 }
 
-export const requestUsers = () => {
+export const requestNews = () => {
   return {
     type: 'FETCH_DATA_START',
   }
@@ -16,20 +18,23 @@ export const fetchError = () => {
   }
 }
 
-export const receiveUsers = (users) => {
+export const receiveNews = (newsData) => {
   return {
     type: 'RECEIVE_DATA',
-    payload: users,
+    payload: newsData,
   }
 }
 
-export function fetchUsers(path) {
-  return function (dispatch) {
-    dispatch(requestUsers())
-
-    return fetch(path)
-      .then((response) => response.json())
-      .then((json) => dispatch(receiveUsers(json)))
-      .catch(() => dispatch(fetchError()))
+export function fetchNews(path) {
+  return async function (dispatch) {
+    dispatch(requestNews())
+    try {
+      const response = await axios.get(path)
+      console.log('fetchNews response data:', response.data)
+      dispatch(receiveNews(response.data))
+    } catch (error) {
+      console.error('fetchNews error:', error)
+      dispatch(fetchError())
+    }
   }
 }

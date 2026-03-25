@@ -1,4 +1,4 @@
-﻿let time = 3000
+let time = 3000
 let steps = 30
 
 let stateInitial = {
@@ -6,6 +6,7 @@ let stateInitial = {
   finishNumber: [0, 0, 0, 0],
   incValues: [0, 0, 0, 0],
   finished: false,
+  teamFactsData: [],
 }
 
 const teamFactsReducer = (state = stateInitial, action) => {
@@ -36,6 +37,11 @@ const teamFactsReducer = (state = stateInitial, action) => {
       return { ...state, currNumber: nextNumber, ...{ finished } }
     }
 
+    case 'FETCH_TEAM_FACTS_SUCCESS': {
+      let finishNumber = action.payload.map((item) => item.number)
+      let incValues = finishNumber.map((item) => ~~(item / steps))
+      return { ...state, teamFactsData: action.payload, finishNumber, incValues }
+    }
     default: {
       return state
     }

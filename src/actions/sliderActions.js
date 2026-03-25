@@ -1,4 +1,6 @@
-﻿let switchAutoTimerId
+import axios from 'axios'
+
+let switchAutoTimerId
 let switchAutoEnableTimerId
 
 export const switchToSlide = (direction) => {
@@ -46,4 +48,15 @@ export const switchAutoEnable = () => {
     }, 2000)
     // 2s + 3s (for slide change) ==> 5s delay
   }
+}
+
+export const fetchSliders = () => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get('/api/sliders');
+      dispatch({ type: 'FETCH_SLIDERS_SUCCESS', payload: response.data });
+    } catch (error) {
+      console.error('Error fetching sliders', error);
+    }
+  };
 }

@@ -20,7 +20,12 @@ module.exports = merge(common, {
     open: false,
     compress: true,
     hot: true,
-    port: 3000,
+    port: 3001,
+    proxy: [{
+      context: ['/'],
+      target: 'http://localhost:3000',
+      pathRewrite: { '^/api': '' },
+    }],
   },
 
   module: {
