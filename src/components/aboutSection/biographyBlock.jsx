@@ -7,9 +7,7 @@ class BiographyBlock extends React.Component {
   render() {
     return (
       <div className='about-content'>
-        <p>
-          {this.props.data || "Loading biography..."}
-        </p>
+        <div dangerouslySetInnerHTML={{ __html: this.props.data || "Loading biography..." }} />
       </div>
     )
   }
