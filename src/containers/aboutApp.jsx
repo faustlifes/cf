@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux'
+﻿import { useDispatch, useSelector } from 'react-redux'
 import SkillsBlock from '../components/aboutSection/skillsBlock.jsx'
 import BiographyBlock from '../components/aboutSection/biographyBlock.jsx'
 import HistoryBlock from '../components/aboutSection/historyBlock.jsx'
@@ -40,7 +40,7 @@ const AboutApp = () => {
 
   switch (currView) {
     case 0:
-      viewBlock = <HistoryBlock data={aboutData.history} />
+      viewBlock = <HistoryBlock data={aboutData.historyHtml} />
       break
     case 1:
       viewBlock = <BiographyBlock data={aboutData.biography} />
