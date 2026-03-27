@@ -1,4 +1,4 @@
-﻿import { createRoot } from 'react-dom/client'
+import { createRoot } from 'react-dom/client'
 import { Routes, BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 // import { combineReducers, applyMiddleware } from 'redux'
@@ -17,11 +17,13 @@ import portfolioReducer from './reducers/portfolioReducer'
 import contactFormReducer from './reducers/contactFormReducer'
 import feedbackReducer from './reducers/feedbackReducer'
 import newsReducer from './reducers/newsReducer'
+import teamReducer from './reducers/teamReducer'
 import Home from './components/Home/Home.jsx'
 import NewsView from './main/NewsView.jsx'
 
 const reducers = {
   slider: sliderReducer,
+  team: teamReducer,
   teamFacts: teamFactsReducer,
   about: aboutReducer,
   portfolio: portfolioReducer,

@@ -1,71 +1,52 @@
-import React from 'react'
-
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import TeamFactsApp from '../containers/teamFactsApp.jsx'
 import TeamMember from '../components/teamMember.jsx'
+import { fetchTeammates } from '../actions/teamActions'
 
-class TeamSection extends React.Component {
-  constructor(props) {
-    super(props)
+const TeamSection = () => {
+  const dispatch = useDispatch()
+  const teamData = useSelector((state) => state.team.teamData) || []
+
+  useEffect(() => {
+    dispatch(fetchTeammates())
+  }, [dispatch])
+
+  const teamFacts = {
+    currNumber: [4609, 3470, 2908, 1908],
+    finished: false,
+    initOptions: () => {},
+    startCount: () => {},
+    stopCount: () => {},
   }
-  render() {
-    let teamData = [
-      {
-        name: 'John Doe #1',
-        position: 'Designer',
-        src: 'assets/img/team_member1.jpg',
-      },
-      {
-        name: 'John Doe #2',
-        position: 'Developer',
-        src: 'assets/img/team_member1.jpg',
-      },
-      {
-        name: 'John Doe #3',
-        position: 'Designer',
-        src: 'assets/img/team_member1.jpg',
-      },
-      {
-        name: 'John Doe #4',
-        position: 'Developer',
-        src: 'assets/img/team_member1.jpg',
-      },
-    ]
 
-    const teamFacts = {
-      currNumber: [4609, 3470, 2908, 1908],
-      finished: false,
-      initOptions: () => {},
-      startCount: () => {},
-      stopCount: () => {},
-    }
-
-    let team = teamData.map((item, index) => {
-      return (
-        <TeamMember
-          key={index}
-          name={item.name}
-          position={item.position}
-          src={item.src}
-        />
-      )
-    })
-
+  const team = teamData.map((item, index) => {
     return (
-      <section id='team'>
-        <div className='light-bg'>
-          <div className='container clearfix section-offset-bottom'>
-            <div className='title-content'>
-              <h1>Meet Our Team</h1>
-              <hr />
-              <hr />
-            </div>
-            <div className='row'>{team}</div>
-          </div>
-          <TeamFactsApp {...teamFacts} />
-        </div>
-      </section>
+      <TeamMember
+        key={index}
+        name={item.name}
+        position={item.position}
+        src={item.src}
+        social={item.social}
+      />
     )
-  }
+  })
+
+  return (
+    <section id='team'>
+      <div className='light-bg'>
+        <div className='container clearfix section-offset-bottom'>
+          <div className='title-content'>
+            <h1>Meet Our Team</h1>
+            <hr />
+            <hr />
+          </div>
+          <div className='row'>{team}</div>
+        </div>
+        <TeamFactsApp {...teamFacts} />
+      </div>
+    </section>
+  )
 }
 
 export default TeamSection

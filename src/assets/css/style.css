@@ -884,12 +884,15 @@ h1 {
 	color: #18cfab;
 }
 
+.team-member-links {
+	display: flex;
+}
+
 .team-member-links a {
 	display: inline-block;
-	float: left;
 	border-top: 1px solid #ffffff;
 	border-right: 1px solid #ffffff;
-	width: 25%;
+	flex: 1;
 }
 
 .team-member-links a:last-child {
