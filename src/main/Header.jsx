@@ -22,11 +22,16 @@ class Header extends PureComponent {
     this.closeLoginModal = this.closeLoginModal.bind(this)
     this.openRegisterModal = this.openRegisterModal.bind(this)
     this.closeRegisterModal = this.closeRegisterModal.bind(this)
+    this.handleLoginSuccess = this.handleLoginSuccess.bind(this)
+    this.handleLogout = this.handleLogout.bind(this)
   }
 
   componentDidMount() {
     scrollSpy.update()
     document.addEventListener('mousedown', this.handleClickOutside)
+    if (sessionStorage.getItem('access_token')) {
+      this.setState({ isLoggedIn: true })
+    }
   }
 
   componentWillUnmount() {
@@ -47,6 +52,18 @@ class Header extends PureComponent {
 
   closeMenu() {
     this.setState({ isMenuOpen: false })
+  }
+
+  handleLoginSuccess() {
+    this.setState({ isLoggedIn: true, isLoginModalOpen: false })
+  }
+
+  handleLogout(e) {
+    if (e) e.preventDefault()
+    sessionStorage.removeItem('access_token')
+    sessionStorage.removeItem('user')
+    this.setState({ isLoggedIn: false })
+    this.closeMenu()
   }
 
   openLoginModal(e) {
@@ -140,13 +157,23 @@ class Header extends PureComponent {
                 </li>
                 <li className='burger-menu-container' ref={this.dropdownRef}>
                   <button
-                    className={`burger-icon ${isMenuOpen ? 'open' : ''}`}
+                    className={`${isLoggedIn ? 'profile-icon' : 'burger-icon'} ${isMenuOpen ? 'open' : ''}`}
                     onClick={this.toggleMenu}
-                    aria-label='Toggle user menu'
+                    aria-label={isLoggedIn ? 'User menu' : 'Toggle navigation'}
                   >
-                    <span className='burger-line'></span>
-                    <span className='burger-line'></span>
-                    <span className='burger-line'></span>
+                    {isLoggedIn ? (
+                      <div className="profile-image-placeholder">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
+                        </svg>
+                      </div>
+                    ) : (
+                      <>
+                        <span className='burger-line'></span>
+                        <span className='burger-line'></span>
+                        <span className='burger-line'></span>
+                      </>
+                    )}
                   </button>
                   {isMenuOpen && (
                     <div className='burger-dropdown'>
@@ -154,7 +181,7 @@ class Header extends PureComponent {
                         {isLoggedIn ? (
                           <>
                             <li><a href='#profile' onClick={this.closeMenu}>User Profile</a></li>
-                            <li><a href='#logout' onClick={this.closeMenu}>Log Out</a></li>
+                            <li><a href='#logout' onClick={this.handleLogout}>Log Out</a></li>
                           </>
                         ) : (
                           <>
@@ -174,6 +201,7 @@ class Header extends PureComponent {
         <LoginModal 
           isOpen={isLoginModalOpen} 
           onClose={this.closeLoginModal} 
+          onLoginSuccess={this.handleLoginSuccess}
         />
         
         <RegisterModal 

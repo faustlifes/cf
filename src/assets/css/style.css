@@ -169,20 +169,39 @@ li.burger-menu-container {
 	margin-left: 20px;
 }
 
-.burger-icon {
+.burger-icon, .profile-icon {
 	background: transparent;
 	border: none;
 	cursor: pointer;
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 40px;
+	width: 40px;
+	padding: 0;
+	z-index: 100;
+	transition: all 0.3s ease;
+}
+
+.burger-icon {
 	justify-content: space-around;
 	height: 24px;
 	width: 30px;
-	padding: 0;
-	z-index: 100;
 }
 
-.burger-icon:focus {
+.profile-icon {
+	border-radius: 50%;
+	border: 2px solid #18cfab;
+	overflow: hidden;
+}
+
+.profile-icon:hover {
+	border-color: #ffffff;
+	transform: scale(1.05);
+}
+
+.burger-icon:focus, .profile-icon:focus {
 	outline: none;
 }
 
@@ -206,6 +225,25 @@ li.burger-menu-container {
 
 .burger-icon.open .burger-line:nth-child(3) {
 	transform: rotate(-45deg);
+}
+
+.profile-image-placeholder {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #3c4140;
+	color: #18cfab;
+}
+
+.profile-image-placeholder svg {
+	width: 24px;
+	height: 24px;
+}
+
+.profile-icon.open {
+	border-color: #ffffff;
 }
 
 .burger-dropdown {
