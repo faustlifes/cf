@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import { Link as ScrollLink, scrollSpy } from 'react-scroll'
 import LoginModal from '../components/auth/LoginModal.jsx'
 import RegisterModal from '../components/auth/RegisterModal.jsx'
+import UserProfileModal from '../components/auth/UserProfileModal.jsx'
 
 // 'react-scroll' have bugs with active class, todo: fix
 
@@ -13,6 +14,7 @@ class Header extends PureComponent {
       isLoggedIn: false, // Mock auth state
       isLoginModalOpen: false,
       isRegisterModalOpen: false,
+      isUserProfileModalOpen: false,
     }
     this.toggleMenu = this.toggleMenu.bind(this)
     this.closeMenu = this.closeMenu.bind(this)
@@ -24,6 +26,8 @@ class Header extends PureComponent {
     this.closeRegisterModal = this.closeRegisterModal.bind(this)
     this.handleLoginSuccess = this.handleLoginSuccess.bind(this)
     this.handleLogout = this.handleLogout.bind(this)
+    this.openUserProfileModal = this.openUserProfileModal.bind(this)
+    this.closeUserProfileModal = this.closeUserProfileModal.bind(this)
   }
 
   componentDidMount() {
@@ -86,8 +90,18 @@ class Header extends PureComponent {
     this.setState({ isRegisterModalOpen: false })
   }
 
+  openUserProfileModal(e) {
+    if (e) e.preventDefault()
+    this.setState({ isUserProfileModalOpen: true })
+    this.closeMenu()
+  }
+
+  closeUserProfileModal() {
+    this.setState({ isUserProfileModalOpen: false })
+  }
+
   render() {
-    const { isMenuOpen, isLoggedIn, isLoginModalOpen, isRegisterModalOpen } = this.state
+    const { isMenuOpen, isLoggedIn, isLoginModalOpen, isRegisterModalOpen, isUserProfileModalOpen } = this.state
 
     let options = {
       duration: 1000,
@@ -180,7 +194,7 @@ class Header extends PureComponent {
                       <ul>
                         {isLoggedIn ? (
                           <>
-                            <li><a href='#profile' onClick={this.closeMenu}>User Profile</a></li>
+                            <li><a href='#profile' onClick={this.openUserProfileModal}>User Profile</a></li>
                             <li><a href='#logout' onClick={this.handleLogout}>Log Out</a></li>
                           </>
                         ) : (
@@ -207,6 +221,11 @@ class Header extends PureComponent {
         <RegisterModal 
           isOpen={isRegisterModalOpen} 
           onClose={this.closeRegisterModal} 
+        />
+        
+        <UserProfileModal
+          isOpen={isUserProfileModalOpen}
+          onClose={this.closeUserProfileModal}
         />
       </div>
     )

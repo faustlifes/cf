@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import axios from 'axios'
+import api from '../../utils/api'
 
 const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
   const [email, setEmail] = useState('')
@@ -18,10 +18,11 @@ const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
     setLoading(true)
     
     try {
-      const response = await axios.post('/api/auth/login', { email, pass: password })
+      const response = await api.post('/api/auth/login', { email, pass: password })
       sessionStorage.setItem('access_token', response.data.access_token)
-      if (response.data.user) {
-        sessionStorage.setItem('user', JSON.stringify(response.data.user))
+      const user = response.data.user || (response.data && typeof response.data === 'object' ? response.data : null)
+      if (user) {
+        sessionStorage.setItem('user', JSON.stringify(user))
       }
       
       if (onLoginSuccess) {
