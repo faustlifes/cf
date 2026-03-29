@@ -24,11 +24,10 @@ class NewsEditor extends BaseEditor {
         <div className='form-group'>
           <label htmlFor='news-date'>Date</label>
           <input 
-            type='text' 
+            type='date' 
             id='news-date' 
             name='date'
             className='modal-input' 
-            placeholder='e.g. 15 March 2026'
             value={formData.date || ''}
             onChange={this.handleInputChange}
             required 

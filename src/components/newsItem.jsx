@@ -7,7 +7,7 @@ import ConfirmationModal from './common/ConfirmationModal.jsx'
 import api from '../utils/api'
 import '../styles/news-management.css'
 
-const NewsItem = ({ id, src, date, title, text, isLoggedIn, dispatch }) => {
+const NewsItem = ({ id, src, date, rawDate, title, text, isLoggedIn, dispatch }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
@@ -76,7 +76,11 @@ const NewsItem = ({ id, src, date, title, text, isLoggedIn, dispatch }) => {
 
       <Link to={`/news/${id}`}>
         <div className='news-photo-container'>
-          <img src={src} alt='News' />
+          <img 
+            src={src || 'assets/img/newsItem-def.webp'} 
+            alt='News' 
+            onError={(e) => { e.target.onerror = null; e.target.src = 'assets/img/newsItem-def.webp'; }} 
+          />
           <span className='news-date'>{date}</span>
         </div>
         <h2 className='news-title'>{title}</h2>
@@ -87,7 +91,7 @@ const NewsItem = ({ id, src, date, title, text, isLoggedIn, dispatch }) => {
           <div className='modal-content' onMouseDown={(e) => e.stopPropagation()}>
             <NewsEditor
               endpoint="/api/news"
-              initialData={{ id, src, date, title, text }}
+              initialData={{ id, src, date: rawDate || date, title, text }}
               onSaveSuccess={handleSaveSuccess}
               onClose={() => setIsEditing(false)}
               title="Edit News"
@@ -111,6 +115,7 @@ NewsItem.propTypes = {
   id: PropTypes.number.isRequired,
   src: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
+  rawDate: PropTypes.string,
   title: PropTypes.string.isRequired,
   text: PropTypes.string,
   isLoggedIn: PropTypes.bool.isRequired,
