@@ -38,7 +38,8 @@ const NewsApp = () => {
       id: item.id,
       title: item.title || `Amazing Post #${item.id}`,
       date: dateStr,
-      src: 'assets/img/news-img1.jpeg',
+      src: item.src || 'assets/img/news-img1.jpeg',
+      text: item.text || '',
     }
 
     return (

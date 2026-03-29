@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { Link as ScrollLink, scrollSpy } from 'react-scroll'
+import { connect } from 'react-redux'
 import LoginModal from '../components/auth/LoginModal.jsx'
 import RegisterModal from '../components/auth/RegisterModal.jsx'
 import UserProfileModal from '../components/auth/UserProfileModal.jsx'
@@ -11,7 +12,6 @@ class Header extends PureComponent {
     super(props)
     this.state = {
       isMenuOpen: false,
-      isLoggedIn: false, // Mock auth state
       isLoginModalOpen: false,
       isRegisterModalOpen: false,
       isUserProfileModalOpen: false,
@@ -33,9 +33,6 @@ class Header extends PureComponent {
   componentDidMount() {
     scrollSpy.update()
     document.addEventListener('mousedown', this.handleClickOutside)
-    if (sessionStorage.getItem('access_token')) {
-      this.setState({ isLoggedIn: true })
-    }
   }
 
   componentWillUnmount() {
@@ -59,14 +56,20 @@ class Header extends PureComponent {
   }
 
   handleLoginSuccess() {
-    this.setState({ isLoggedIn: true, isLoginModalOpen: false })
+    this.props.dispatch({ 
+      type: 'LOGIN_SUCCESS', 
+      payload: { 
+        user: JSON.parse(sessionStorage.getItem('user')) 
+      } 
+    })
+    this.setState({ isLoginModalOpen: false })
   }
 
   handleLogout(e) {
     if (e) e.preventDefault()
     sessionStorage.removeItem('access_token')
     sessionStorage.removeItem('user')
-    this.setState({ isLoggedIn: false })
+    this.props.dispatch({ type: 'LOGOUT' })
     this.closeMenu()
   }
 
@@ -101,7 +104,8 @@ class Header extends PureComponent {
   }
 
   render() {
-    const { isMenuOpen, isLoggedIn, isLoginModalOpen, isRegisterModalOpen, isUserProfileModalOpen } = this.state
+    const { isMenuOpen, isLoginModalOpen, isRegisterModalOpen, isUserProfileModalOpen } = this.state
+    const { isLoggedIn } = this.props
 
     let options = {
       duration: 1000,
@@ -232,4 +236,9 @@ class Header extends PureComponent {
   }
 }
 
-export default Header
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  user: state.auth.user,
+})
+
+export default connect(mapStateToProps)(Header)

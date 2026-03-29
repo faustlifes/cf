@@ -18,6 +18,7 @@ import contactFormReducer from './reducers/contactFormReducer'
 import feedbackReducer from './reducers/feedbackReducer'
 import newsReducer from './reducers/newsReducer'
 import teamReducer from './reducers/teamReducer'
+import authReducer from './reducers/authReducer'
 import Home from './components/Home/Home.jsx'
 import NewsView from './main/NewsView.jsx'
 
@@ -30,6 +31,7 @@ const reducers = {
   contactForm: contactFormReducer,
   feedback: feedbackReducer,
   news: newsReducer,
+  auth: authReducer,
 }
 
 // const middleware = applyMiddleware(thunk)
