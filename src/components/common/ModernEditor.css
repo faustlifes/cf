@@ -2,6 +2,7 @@
   border: 1px solid #ced4da;
   border-radius: 4px;
   background: #fff;
+  color: #333;
 }
 
 .editor-menubar {
@@ -44,12 +45,15 @@
 }
 
 .editor-content {
-  padding: 12px;
-  min-height: 200px;
+  display: flex;
+  flex-direction: column;
 }
 
 .editor-content .ProseMirror {
   outline: none;
+  padding: 12px;
+  min-height: 200px;
+  flex-grow: 1;
 }
 
 .editor-content .ProseMirror p {
