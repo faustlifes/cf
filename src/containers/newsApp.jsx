@@ -34,11 +34,14 @@ const NewsApp = () => {
   let items = data.slice(0, showCount).map((item) => {
     let date = new Date(item.date)
     let dateStr = `${date.getDate()} ${monthNames[date.getMonth()]}`
+    let rawDate = !isNaN(date) ? date.toISOString().split('T')[0] : ''
     let props = {
       id: item.id,
       title: item.title || `Amazing Post #${item.id}`,
       date: dateStr,
-      src: 'assets/img/news-img1.jpeg',
+      rawDate: rawDate,
+      src: item.src || 'assets/img/newsItem-def.webp',
+      text: item.text || '',
     }
 
     return (

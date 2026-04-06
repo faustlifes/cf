@@ -1,4 +1,4 @@
-﻿let stateInitial = {
+let stateInitial = {
   data: [],
   showBlockVal: 1,
   status: '',
@@ -20,6 +20,20 @@ const newsReducer = (state = stateInitial, action) => {
         ...state,
         status: 'Data received successfully',
         data: action.payload,
+      }
+    }
+    case 'UPDATE_NEWS_SUCCESS': {
+      return {
+        ...state,
+        data: state.data.map((item) =>
+          item.id === action.payload.id ? { ...item, ...action.payload } : item
+        ),
+      }
+    }
+    case 'DELETE_NEWS_SUCCESS': {
+      return {
+        ...state,
+        data: state.data.filter((item) => item.id !== action.payload),
       }
     }
     case 'SHOW_MORE': {

@@ -29,7 +29,7 @@ const NewsView = () => {
             <hr />
           </div>
           <h3>Date: {data?.date}</h3>
-          <p>{data?.text}</p>
+          <div className='news-content' dangerouslySetInnerHTML={{ __html: data?.text || '' }} />
           <div className='news-btn-container'>
             <Link to='/#news'>
                <span className='btn news-load-btn'>Back</span>
