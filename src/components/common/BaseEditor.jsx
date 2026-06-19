@@ -46,7 +46,7 @@ class BaseEditor extends Component {
         onSaveSuccess(response.data)
       }
     } catch (err) {
-      this.setState({ error: err.response?.data?.message || 'Failed to save changes.' })
+      this.setState({ error: err.message || err.response?.data?.message || 'Failed to save changes.' })
     } finally {
       this.setState({ isSaving: false })
     }

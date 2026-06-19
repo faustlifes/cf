@@ -21,6 +21,7 @@ import teamReducer from './reducers/teamReducer'
 import authReducer from './reducers/authReducer'
 import Home from './components/Home/Home.jsx'
 import NewsView from './main/NewsView.jsx'
+import { setStore } from './utils/api'
 
 const reducers = {
   slider: sliderReducer,
@@ -36,6 +37,7 @@ const reducers = {
 
 // const middleware = applyMiddleware(thunk)
 const store = configureStore({ reducer: reducers })
+setStore(store)
 const container = document.getElementById('main-app')
 const root = createRoot(container)
 //------------------------------------------------------
