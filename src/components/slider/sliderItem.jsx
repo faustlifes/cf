@@ -20,7 +20,9 @@ const SliderItem = ({ id, img, title1, title2, subTitle, text }) => {
 
   const sliderItemBg = {
     position: 'relative',
-    background: `linear-gradient(to bottom, rgba(30, 30, 30, .5) 0%, rgba(30, 30, 30, .5) 100%), url(${img}) no-repeat center`,
+    backgroundImage: `linear-gradient(to bottom, rgba(30, 30, 30, .5) 0%, rgba(30, 30, 30, .5) 100%), url(${img})`,
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
   }
 
