@@ -20,10 +20,11 @@ const TeamSection = () => {
     stopCount: () => {},
   }
 
-  const team = teamData.map((item, index) => {
+  const team = teamData.map((item) => {
     return (
       <TeamMember
-        key={index}
+        key={item.id}
+        id={item.id}
         name={item.name}
         position={item.position}
         src={item.src}
