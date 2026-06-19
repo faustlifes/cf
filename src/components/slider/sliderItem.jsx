@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Link as ScrollLink } from 'react-scroll'
 import { useSelector, useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -56,7 +57,7 @@ const SliderItem = ({ id, img, title1, title2, subTitle, text }) => {
         </div>
       </div>
 
-      {isEditing && (
+      {isEditing && createPortal(
         <div className='modal-overlay' onMouseDown={() => setIsEditing(false)}>
           <div className='modal-content' onMouseDown={(e) => e.stopPropagation()}>
             <SliderEditor
@@ -67,7 +68,8 @@ const SliderItem = ({ id, img, title1, title2, subTitle, text }) => {
               title='Edit Slide'
             />
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </li>
   )
