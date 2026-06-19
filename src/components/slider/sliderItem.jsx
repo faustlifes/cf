@@ -8,7 +8,6 @@ import '../../styles/news-management.css'
 const SliderItem = ({ id, img, title1, title2, subTitle, text }) => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
   const dispatch = useDispatch()
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
 
   const scrollOptions = {
@@ -19,6 +18,7 @@ const SliderItem = ({ id, img, title1, title2, subTitle, text }) => {
   }
 
   const sliderItemBg = {
+    position: 'relative',
     background: `linear-gradient(to bottom, rgba(30, 30, 30, .5) 0%, rgba(30, 30, 30, .5) 100%), url(${img}) no-repeat center`,
     backgroundSize: 'cover',
   }
@@ -32,14 +32,9 @@ const SliderItem = ({ id, img, title1, title2, subTitle, text }) => {
     <li className='slider-item' style={sliderItemBg}>
       {isLoggedIn && id && (
         <div className='news-item-actions'>
-          <button className='three-dots-btn' onClick={() => setIsMenuOpen((o) => !o)}>
+          <button className='three-dots-btn' onClick={() => setIsEditing(true)}>
             &#8942;
           </button>
-          {isMenuOpen && (
-            <div className='actions-dropdown'>
-              <button onClick={() => { setIsEditing(true); setIsMenuOpen(false) }}>Edit</button>
-            </div>
-          )}
         </div>
       )}
 
