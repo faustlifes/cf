@@ -61,6 +61,14 @@ const sliderReducer = (state = stateInitial, action) => {
         slidersInfo: action.payload,
       }
     }
+    case 'UPDATE_SLIDER_SUCCESS': {
+      return {
+        ...state,
+        slidersInfo: state.slidersInfo.map((s) =>
+          s.id === action.payload.id ? action.payload : s
+        ),
+      }
+    }
     default: {
       return state
     }
