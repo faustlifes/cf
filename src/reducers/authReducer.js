@@ -11,12 +11,14 @@ const authReducer = (state = initialState, action) => {
         ...state,
         isLoggedIn: true,
         user: action.payload.user,
+        sessionExpired: false,
       }
     case 'LOGOUT':
       return {
         ...state,
         isLoggedIn: false,
         user: null,
+        sessionExpired: false,
       }
     case 'SESSION_EXPIRED':
       return {

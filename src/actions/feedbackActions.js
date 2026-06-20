@@ -1,4 +1,4 @@
-import axios from 'axios'
+import api from '../utils/api'
 
 export const addComment = (data) => {
   return {
@@ -24,7 +24,7 @@ export const initComments = (data) => {
 export const fetchFeedbacks = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get('/api/feedback');
+      const response = await api.get('/api/feedback');
       dispatch(initComments(response.data));
     } catch (error) {
       console.error('Error fetching feedbacks', error);

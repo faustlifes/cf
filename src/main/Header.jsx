@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import { Link as ScrollLink, scrollSpy } from 'react-scroll'
 import { connect } from 'react-redux'
 import LoginModal from '../components/auth/LoginModal.jsx'
+import { resetSessionExpiredFlag } from '../utils/api'
 import RegisterModal from '../components/auth/RegisterModal.jsx'
 import UserProfileModal from '../components/auth/UserProfileModal.jsx'
 
@@ -56,11 +57,12 @@ class Header extends PureComponent {
   }
 
   handleLoginSuccess() {
-    this.props.dispatch({ 
-      type: 'LOGIN_SUCCESS', 
-      payload: { 
-        user: JSON.parse(sessionStorage.getItem('user')) 
-      } 
+    resetSessionExpiredFlag()
+    this.props.dispatch({
+      type: 'LOGIN_SUCCESS',
+      payload: {
+        user: JSON.parse(sessionStorage.getItem('user')),
+      },
     })
     this.setState({ isLoginModalOpen: false })
   }

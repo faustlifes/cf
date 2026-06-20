@@ -10,13 +10,14 @@ export const setStore = (store) => { _store = store }
 const isTokenExpired = (token) => {
   try {
     const payload = JSON.parse(atob(token.split('.')[1]))
-    return payload.exp * 1000 < Date.now()
+    return payload.exp == null || payload.exp * 1000 < Date.now()
   } catch {
     return true
   }
 }
 
 let _sessionExpiredDispatched = false
+export const resetSessionExpiredFlag = () => { _sessionExpiredDispatched = false }
 const handleSessionExpired = () => {
   if (_sessionExpiredDispatched) return
   _sessionExpiredDispatched = true

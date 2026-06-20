@@ -1,4 +1,3 @@
-import axios from 'axios'
 import api from '../utils/api'
 
 let switchAutoTimerId
@@ -54,7 +53,7 @@ export const switchAutoEnable = () => {
 export const fetchSliders = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get('/api/sliders');
+      const response = await api.get('/api/sliders');
       dispatch({ type: 'FETCH_SLIDERS_SUCCESS', payload: response.data });
     } catch (error) {
       console.error('Error fetching sliders', error);

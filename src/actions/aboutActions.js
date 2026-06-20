@@ -1,4 +1,4 @@
-import axios from 'axios'
+import api from '../utils/api'
 
 export const showView = (number) => {
   return {
@@ -16,7 +16,7 @@ export const showSkillsEnable = () => {
 export const fetchAbouts = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get('/api/about');
+      const response = await api.get('/api/about');
       dispatch({ type: 'FETCH_ABOUT_SUCCESS', payload: response.data || {} }); // Assume a single document or object for about
     } catch (error) {
       console.error('Error fetching about', error);

@@ -6,10 +6,9 @@ const SessionExpiredBanner = () => {
   const sessionExpired = useSelector((state) => state.auth.sessionExpired)
 
   useEffect(() => {
-    if (sessionExpired) {
-      const timer = setTimeout(() => window.location.reload(), 3000)
-      return () => clearTimeout(timer)
-    }
+    if (!sessionExpired) return undefined
+    const timer = setTimeout(() => window.location.reload(), 3000)
+    return () => clearTimeout(timer)
   }, [sessionExpired])
 
   if (!sessionExpired) return null
