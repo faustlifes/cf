@@ -74,7 +74,7 @@ const NewsItem = ({ id, src, date, rawDate, title, text, isLoggedIn, dispatch })
         </div>
       )}
 
-      <Link to={`/news/${id}`}>
+      <Link to={`/news/${id}`} onClick={() => window.history.replaceState(null, '', '/#news')}>
         <div className='news-photo-container'>
           <img 
             src={src || 'assets/img/newsItem-def.webp'} 
