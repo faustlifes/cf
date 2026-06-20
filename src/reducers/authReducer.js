@@ -1,6 +1,7 @@
 const initialState = {
   isLoggedIn: !!sessionStorage.getItem('access_token'),
   user: JSON.parse(sessionStorage.getItem('user')) || null,
+  sessionExpired: false,
 }
 
 const authReducer = (state = initialState, action) => {
@@ -16,6 +17,13 @@ const authReducer = (state = initialState, action) => {
         ...state,
         isLoggedIn: false,
         user: null,
+      }
+    case 'SESSION_EXPIRED':
+      return {
+        ...state,
+        isLoggedIn: false,
+        user: null,
+        sessionExpired: true,
       }
     case 'UPDATE_USER':
       return {

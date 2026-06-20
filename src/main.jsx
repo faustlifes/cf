@@ -21,6 +21,7 @@ import teamReducer from './reducers/teamReducer'
 import authReducer from './reducers/authReducer'
 import Home from './components/Home/Home.jsx'
 import NewsView from './main/NewsView.jsx'
+import SessionExpiredBanner from './components/auth/SessionExpiredBanner.jsx'
 import { setStore } from './utils/api'
 
 const reducers = {
@@ -44,6 +45,7 @@ const root = createRoot(container)
 
 root.render(
   <Provider store={store}>
+    <SessionExpiredBanner />
     <div>
       <Header />
       <BrowserRouter>
