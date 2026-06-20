@@ -32,11 +32,14 @@ const TeamMember = ({ id, src, name, position, social, isLoggedIn, dispatch }) =
     try {
       await api.delete(`/api/teammates/${id}`)
       dispatch({ type: 'DELETE_TEAMMATE_SUCCESS', payload: id })
+      setShowDeleteConfirm(false)
     } catch (err) {
-      console.error('Failed to delete teammate:', err)
+      if (err.message !== 'Session expired.') {
+        console.error('Failed to delete teammate:', err)
+        setShowDeleteConfirm(false)
+      }
     } finally {
       setIsDeleting(false)
-      setShowDeleteConfirm(false)
     }
   }
 

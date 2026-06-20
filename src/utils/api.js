@@ -10,10 +10,33 @@ export const setStore = (store) => { _store = store }
 const isTokenExpired = (token) => {
   try {
     const payload = JSON.parse(atob(token.split('.')[1]))
-    return payload.exp * 1000 < Date.now()
+    return payload.exp == null || payload.exp * 1000 <= Date.now()
   } catch {
     return true
   }
+}
+
+let _sessionExpiredDispatched = false
+let _reloadTimer = null
+
+export const resetSessionExpiredFlag = () => {
+  _sessionExpiredDispatched = false
+  if (_reloadTimer) {
+    clearTimeout(_reloadTimer)
+    _reloadTimer = null
+  }
+}
+
+const handleSessionExpired = () => {
+  if (_sessionExpiredDispatched) return
+  sessionStorage.removeItem('access_token')
+  sessionStorage.removeItem('user')
+  if (!_store) return
+  _sessionExpiredDispatched = true
+  _store.dispatch({ type: 'SESSION_EXPIRED' })
+  _reloadTimer = setTimeout(() => {
+    window.location.href = '/'
+  }, 3000)
 }
 
 api.interceptors.request.use(
@@ -21,10 +44,8 @@ api.interceptors.request.use(
     const token = sessionStorage.getItem('access_token')
     if (token) {
       if (isTokenExpired(token)) {
-        sessionStorage.removeItem('access_token')
-        sessionStorage.removeItem('user')
-        if (_store) _store.dispatch({ type: 'LOGOUT' })
-        return Promise.reject(new Error('Session expired. Please log in again.'))
+        handleSessionExpired()
+        return Promise.reject(new Error('Session expired.'))
       }
       config.headers.Authorization = `Bearer ${token}`
     }
@@ -37,9 +58,8 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      sessionStorage.removeItem('access_token')
-      sessionStorage.removeItem('user')
-      if (_store) _store.dispatch({ type: 'LOGOUT' })
+      handleSessionExpired()
+      return Promise.reject(new Error('Session expired.'))
     }
     return Promise.reject(error)
   }

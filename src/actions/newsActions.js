@@ -1,4 +1,4 @@
-import axios from 'axios'
+import api from '../utils/api'
 
 export const showMore = () => {
   return {
@@ -29,10 +29,11 @@ export function fetchNews(path) {
   return async function (dispatch) {
     dispatch(requestNews())
     try {
-      const response = await axios.get(path)
+      const response = await api.get(path)
       console.log('fetchNews response data:', response.data)
       dispatch(receiveNews(response.data))
     } catch (error) {
+      if (error.message === 'Session expired.') return
       console.error('fetchNews error:', error)
       dispatch(fetchError())
     }

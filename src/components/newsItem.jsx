@@ -31,11 +31,14 @@ const NewsItem = ({ id, src, date, rawDate, title, text, isLoggedIn, dispatch })
     try {
       await api.delete(`/api/news/${id}`)
       dispatch({ type: 'DELETE_NEWS_SUCCESS', payload: id })
+      setShowDeleteConfirm(false)
     } catch (err) {
-      console.error('Failed to delete news:', err)
+      if (err.message !== 'Session expired.') {
+        console.error('Failed to delete news:', err)
+        setShowDeleteConfirm(false)
+      }
     } finally {
       setIsDeleting(false)
-      setShowDeleteConfirm(false)
     }
   }
 

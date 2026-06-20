@@ -46,7 +46,10 @@ class BaseEditor extends Component {
         onSaveSuccess(response.data)
       }
     } catch (err) {
-      this.setState({ error: err.message || err.response?.data?.message || 'Failed to save changes.' })
+      if (err.message === 'Session expired.') return
+      this.setState({
+        error: err.response?.data?.message || err.message || 'Failed to save changes.',
+      })
     } finally {
       this.setState({ isSaving: false })
     }
