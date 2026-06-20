@@ -112,6 +112,7 @@ class Header extends PureComponent {
       offset: -100,
       smooth: true,
       spy: true,
+      hashSpy: true,
       activeClass: 'nav-active',
     }
     return (
