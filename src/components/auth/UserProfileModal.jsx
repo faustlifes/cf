@@ -107,6 +107,7 @@ const UserProfileModal = ({ isOpen, onClose, onUpdateSuccess }) => {
         onClose()
       }, 1500)
     } catch (err) {
+      if (err.message === 'Session expired.') return
       setError(err.response?.data?.message || 'Failed to update profile. Please try again.')
     } finally {
       setLoading(false)

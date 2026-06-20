@@ -6,6 +6,7 @@ export const fetchTeammates = () => {
       const response = await api.get('/api/teammates')
       dispatch({ type: 'FETCH_TEAMMATES_SUCCESS', payload: response.data })
     } catch (error) {
+      if (error.message === 'Session expired.') return
       console.error('Error fetching teammates', error)
     }
   }

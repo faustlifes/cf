@@ -56,6 +56,7 @@ export const fetchSliders = () => {
       const response = await api.get('/api/sliders');
       dispatch({ type: 'FETCH_SLIDERS_SUCCESS', payload: response.data });
     } catch (error) {
+      if (error.message === 'Session expired.') return
       console.error('Error fetching sliders', error);
     }
   };
@@ -63,7 +64,12 @@ export const fetchSliders = () => {
 
 export const updateSlider = (id, data) => {
   return async (dispatch) => {
-    const response = await api.put(`/api/sliders/${id}`, data);
-    dispatch({ type: 'UPDATE_SLIDER_SUCCESS', payload: response.data });
+    try {
+      const response = await api.put(`/api/sliders/${id}`, data);
+      dispatch({ type: 'UPDATE_SLIDER_SUCCESS', payload: response.data });
+    } catch (error) {
+      if (error.message === 'Session expired.') return
+      console.error('Error updating slider', error);
+    }
   };
 }

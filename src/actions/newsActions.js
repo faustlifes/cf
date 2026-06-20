@@ -33,6 +33,7 @@ export function fetchNews(path) {
       console.log('fetchNews response data:', response.data)
       dispatch(receiveNews(response.data))
     } catch (error) {
+      if (error.message === 'Session expired.') return
       console.error('fetchNews error:', error)
       dispatch(fetchError())
     }

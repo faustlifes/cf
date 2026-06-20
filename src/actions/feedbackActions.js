@@ -27,6 +27,7 @@ export const fetchFeedbacks = () => {
       const response = await api.get('/api/feedback');
       dispatch(initComments(response.data));
     } catch (error) {
+      if (error.message === 'Session expired.') return
       console.error('Error fetching feedbacks', error);
     }
   };

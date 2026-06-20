@@ -13,6 +13,7 @@ export const fetchPortfolio = () => {
       const response = await api.get('/api/portfolio');
       dispatch({ type: 'FETCH_PORTFOLIO_SUCCESS', payload: response.data });
     } catch (error) {
+      if (error.message === 'Session expired.') return
       console.error('Error fetching portfolio', error);
     }
   };

@@ -36,6 +36,7 @@ export const fetchTeamFacts = () => {
       const response = await api.get('/api/team-facts');
       dispatch({ type: 'FETCH_TEAM_FACTS_SUCCESS', payload: response.data });
     } catch (error) {
+      if (error.message === 'Session expired.') return
       console.error('Error fetching team facts', error);
     }
   };
