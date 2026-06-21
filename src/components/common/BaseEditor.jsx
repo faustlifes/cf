@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import PropTypes from 'prop-types'
 import api from '../../utils/api'
 
@@ -50,7 +50,10 @@ class BaseEditor extends Component {
     } catch (err) {
       if (err.message === 'Session expired.') return
       this.setState({
-        error: err.response?.data?.message || err.message || 'Failed to save changes.',
+        error:
+          err.response?.data?.message ||
+          err.message ||
+          'Failed to save changes.',
       })
     } finally {
       this.setState({ isSaving: false })
@@ -69,16 +72,28 @@ class BaseEditor extends Component {
     return (
       <div className='base-editor'>
         <h3>{title || 'Edit Item'}</h3>
-        {error && <div className='error-message' style={{ color: '#ff6b6b', marginBottom: '15px' }}>{error}</div>}
-        
+        {error && (
+          <div
+            className='error-message'
+            style={{ color: '#ff6b6b', marginBottom: '15px' }}
+          >
+            {error}
+          </div>
+        )}
+
         <form onSubmit={this.handleSave}>
           {this.renderFormFields()}
-          
+
           <div className='modal-actions'>
             <button type='submit' className='btn modal-btn' disabled={isSaving}>
               {isSaving ? 'Saving...' : 'Save Changes'}
             </button>
-            <button type='button' className='btn modal-btn-cancel' onClick={onClose} disabled={isSaving}>
+            <button
+              type='button'
+              className='btn modal-btn-cancel'
+              onClick={onClose}
+              disabled={isSaving}
+            >
               Cancel
             </button>
           </div>

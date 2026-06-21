@@ -1,6 +1,11 @@
 import BaseEditor from '../common/BaseEditor.jsx'
 
-const CATEGORIES = ['Graphic Design', 'Web Design', 'Landing Pages', 'Wordpress']
+const CATEGORIES = [
+  'Graphic Design',
+  'Web Design',
+  'Landing Pages',
+  'Wordpress',
+]
 
 class PortfolioEditor extends BaseEditor {
   renderFormFields() {
@@ -58,7 +63,9 @@ class PortfolioEditor extends BaseEditor {
           >
             <option value=''>Select a category</option>
             {CATEGORIES.map((cat) => (
-              <option key={cat} value={cat}>{cat}</option>
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
             ))}
           </select>
         </div>

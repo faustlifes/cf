@@ -1,5 +1,5 @@
 import axios from 'axios'
-import api, { setStore, resetSessionExpiredFlag } from '../utils/api'
+import { setStore, resetSessionExpiredFlag } from '../utils/api'
 
 jest.mock('axios', () => {
   const mockInstance = {
@@ -16,14 +16,13 @@ jest.mock('axios', () => {
 })
 
 // Pull the interceptor handlers registered during module load
-let requestFulfilled, requestRejected, responseFulfilled, responseRejected
+let requestFulfilled, responseRejected
 
 beforeAll(() => {
   const mockAxiosInstance = axios.create()
-  const requestCall = mockAxiosInstance.interceptors.request.use.mock.calls[0]
-  const responseCall = mockAxiosInstance.interceptors.response.use.mock.calls[0]
-  ;[requestFulfilled, requestRejected] = requestCall
-  ;[responseFulfilled, responseRejected] = responseCall
+  ;[requestFulfilled] = mockAxiosInstance.interceptors.request.use.mock.calls[0]
+  ;[, responseRejected] =
+    mockAxiosInstance.interceptors.response.use.mock.calls[0]
 })
 
 beforeEach(() => {
@@ -51,7 +50,9 @@ describe('request interceptor — expired token', () => {
     setStore(store)
     sessionStorage.setItem('access_token', makeToken(-1000))
 
-    await expect(requestFulfilled({ headers: {} })).rejects.toThrow('Session expired.')
+    await expect(requestFulfilled({ headers: {} })).rejects.toThrow(
+      'Session expired.'
+    )
     expect(store.dispatch).toHaveBeenCalledWith({ type: 'SESSION_EXPIRED' })
     expect(sessionStorage.getItem('access_token')).toBeNull()
   })
@@ -74,11 +75,15 @@ describe('request interceptor — expired token', () => {
     setStore(store)
     sessionStorage.setItem('access_token', makeToken(-1000))
 
-    await expect(requestFulfilled({ headers: {} })).rejects.toThrow('Session expired.')
+    await expect(requestFulfilled({ headers: {} })).rejects.toThrow(
+      'Session expired.'
+    )
     resetSessionExpiredFlag()
 
     sessionStorage.setItem('access_token', makeToken(-1000))
-    await expect(requestFulfilled({ headers: {} })).rejects.toThrow('Session expired.')
+    await expect(requestFulfilled({ headers: {} })).rejects.toThrow(
+      'Session expired.'
+    )
 
     expect(store.dispatch).toHaveBeenCalledTimes(2)
   })
@@ -87,13 +92,17 @@ describe('request interceptor — expired token', () => {
     setStore(null)
     sessionStorage.setItem('access_token', makeToken(-1000))
 
-    await expect(requestFulfilled({ headers: {} })).rejects.toThrow('Session expired.')
+    await expect(requestFulfilled({ headers: {} })).rejects.toThrow(
+      'Session expired.'
+    )
 
     // Flag must NOT be latched — a subsequent call with a real store must dispatch
     const store = makeStore()
     setStore(store)
     sessionStorage.setItem('access_token', makeToken(-1000))
-    await expect(requestFulfilled({ headers: {} })).rejects.toThrow('Session expired.')
+    await expect(requestFulfilled({ headers: {} })).rejects.toThrow(
+      'Session expired.'
+    )
 
     expect(store.dispatch).toHaveBeenCalledWith({ type: 'SESSION_EXPIRED' })
   })
@@ -105,7 +114,9 @@ describe('request interceptor — expired token', () => {
     const payload = btoa(JSON.stringify({ exp }))
     sessionStorage.setItem('access_token', `h.${payload}.s`)
 
-    await expect(requestFulfilled({ headers: {} })).rejects.toThrow('Session expired.')
+    await expect(requestFulfilled({ headers: {} })).rejects.toThrow(
+      'Session expired.'
+    )
     expect(store.dispatch).toHaveBeenCalledWith({ type: 'SESSION_EXPIRED' })
   })
 
@@ -127,8 +138,13 @@ describe('response interceptor — 401', () => {
     const store = makeStore()
     setStore(store)
 
-    const axiosError = { response: { status: 401 }, message: 'Request failed with status code 401' }
-    await expect(responseRejected(axiosError)).rejects.toThrow('Session expired.')
+    const axiosError = {
+      response: { status: 401 },
+      message: 'Request failed with status code 401',
+    }
+    await expect(responseRejected(axiosError)).rejects.toThrow(
+      'Session expired.'
+    )
     expect(store.dispatch).toHaveBeenCalledWith({ type: 'SESSION_EXPIRED' })
   })
 
@@ -138,18 +154,27 @@ describe('response interceptor — 401', () => {
     sessionStorage.setItem('access_token', makeToken(-1000))
 
     // Simulate: local expiry fires first
-    await expect(requestFulfilled({ headers: {} })).rejects.toThrow('Session expired.')
+    await expect(requestFulfilled({ headers: {} })).rejects.toThrow(
+      'Session expired.'
+    )
 
     // Then a concurrent 401 response arrives
-    const axiosError = { response: { status: 401 }, message: 'Request failed with status code 401' }
-    await expect(responseRejected(axiosError)).rejects.toThrow('Session expired.')
+    const axiosError = {
+      response: { status: 401 },
+      message: 'Request failed with status code 401',
+    }
+    await expect(responseRejected(axiosError)).rejects.toThrow(
+      'Session expired.'
+    )
 
     expect(store.dispatch).toHaveBeenCalledTimes(1)
   })
 
   test('passes through non-401 errors unchanged', async () => {
     const axiosError = { response: { status: 500 }, message: 'Server error' }
-    await expect(responseRejected(axiosError)).rejects.toMatchObject({ message: 'Server error' })
+    await expect(responseRejected(axiosError)).rejects.toMatchObject({
+      message: 'Server error',
+    })
   })
 })
 
@@ -161,7 +186,9 @@ describe('reload timer', () => {
     window.location = { href: '' }
 
     sessionStorage.setItem('access_token', makeToken(-1000))
-    await expect(requestFulfilled({ headers: {} })).rejects.toThrow('Session expired.')
+    await expect(requestFulfilled({ headers: {} })).rejects.toThrow(
+      'Session expired.'
+    )
 
     jest.advanceTimersByTime(3000)
     expect(window.location.href).toBe('/')
@@ -174,7 +201,9 @@ describe('reload timer', () => {
     window.location = { href: '' }
 
     sessionStorage.setItem('access_token', makeToken(-1000))
-    await expect(requestFulfilled({ headers: {} })).rejects.toThrow('Session expired.')
+    await expect(requestFulfilled({ headers: {} })).rejects.toThrow(
+      'Session expired.'
+    )
 
     resetSessionExpiredFlag()
     jest.advanceTimersByTime(3000)

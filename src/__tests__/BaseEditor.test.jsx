@@ -1,4 +1,3 @@
-import React from 'react'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import BaseEditor from '../components/common/BaseEditor'
@@ -35,7 +34,10 @@ describe('BaseEditor.handleSave — POST vs PUT routing (MF-3)', () => {
     fireEvent.click(screen.getByText('Save Changes'))
 
     await waitFor(() =>
-      expect(api.put).toHaveBeenCalledWith('/api/portfolio/1', { id: '1', title: 'Old' })
+      expect(api.put).toHaveBeenCalledWith('/api/portfolio/1', {
+        id: '1',
+        title: 'Old',
+      })
     )
     expect(api.post).not.toHaveBeenCalled()
     expect(onSaveSuccess).toHaveBeenCalledWith({ id: '1', title: 'Updated' })
@@ -57,7 +59,9 @@ describe('BaseEditor.handleSave — POST vs PUT routing (MF-3)', () => {
     fireEvent.click(screen.getByText('Save Changes'))
 
     await waitFor(() =>
-      expect(api.post).toHaveBeenCalledWith('/api/portfolio', { title: 'New Item' })
+      expect(api.post).toHaveBeenCalledWith('/api/portfolio', {
+        title: 'New Item',
+      })
     )
     expect(api.put).not.toHaveBeenCalled()
     expect(onSaveSuccess).toHaveBeenCalledWith({ id: '2', title: 'New Item' })

@@ -42,4 +42,15 @@ module.exports = {
       flowVersion: "0.63.1",
     },
   },
+  overrides: [
+    {
+      files: ["src/__tests__/**/*.js", "src/__tests__/**/*.jsx"],
+      env: {
+        jest: true,
+      },
+      rules: {
+        "import/no-unresolved": "off",
+      },
+    },
+  ],
 };

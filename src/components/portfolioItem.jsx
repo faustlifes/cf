@@ -6,7 +6,15 @@ import ConfirmationModal from './common/ConfirmationModal.jsx'
 import api from '../utils/api'
 import '../styles/news-management.css'
 
-const PortfolioItem = ({ id, src, title, title2, category, isLoggedIn, dispatch }) => {
+const PortfolioItem = ({
+  id,
+  src,
+  title,
+  title2,
+  category,
+  isLoggedIn,
+  dispatch,
+}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
@@ -59,11 +67,17 @@ const PortfolioItem = ({ id, src, title, title2, category, isLoggedIn, dispatch 
 
       {isLoggedIn && (
         <div className='news-item-actions'>
-          <button className='three-dots-btn' onClick={toggleMenu}>&#8942;</button>
+          <button className='three-dots-btn' onClick={toggleMenu}>
+            &#8942;
+          </button>
           {isMenuOpen && (
             <div className='actions-dropdown'>
               <button onClick={handleEditClick}>Edit</button>
-              <button className='delete-btn' onClick={handleDeleteClick} disabled={isDeleting}>
+              <button
+                className='delete-btn'
+                onClick={handleDeleteClick}
+                disabled={isDeleting}
+              >
                 {isDeleting ? 'Deleting...' : 'Delete'}
               </button>
             </div>
@@ -74,8 +88,12 @@ const PortfolioItem = ({ id, src, title, title2, category, isLoggedIn, dispatch 
       <div className='image-mask'>
         <span className='image-mask-content'>
           <span>
-            <a href='#'><i className='fa fa-link' /></a>
-            <a href='#'><i className='fa fa-search' /></a>
+            <a href='#'>
+              <i className='fa fa-link' />
+            </a>
+            <a href='#'>
+              <i className='fa fa-search' />
+            </a>
           </span>
           <h1 className='image-mask-title'>{title}</h1>
           {title2 && <h2 className='image-mask-title2'>{title2}</h2>}
@@ -85,7 +103,10 @@ const PortfolioItem = ({ id, src, title, title2, category, isLoggedIn, dispatch 
 
       {isEditing && (
         <div className='modal-overlay' onMouseDown={() => setIsEditing(false)}>
-          <div className='modal-content' onMouseDown={(e) => e.stopPropagation()}>
+          <div
+            className='modal-content'
+            onMouseDown={(e) => e.stopPropagation()}
+          >
             <PortfolioEditor
               title='Edit Portfolio Item'
               endpoint='/api/portfolio'
@@ -103,7 +124,10 @@ const PortfolioItem = ({ id, src, title, title2, category, isLoggedIn, dispatch 
         message='Are you sure you want to delete this portfolio item? This action cannot be undone.'
         errorMessage={deleteError}
         onConfirm={handleConfirmDelete}
-        onCancel={() => { setShowDeleteConfirm(false); setDeleteError(null) }}
+        onCancel={() => {
+          setShowDeleteConfirm(false)
+          setDeleteError(null)
+        }}
       />
     </li>
   )
