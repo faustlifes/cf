@@ -18,3 +18,15 @@ export const fetchPortfolio = () => {
     }
   };
 }
+
+export const createPortfolio = (data) => {
+  return async (dispatch) => {
+    try {
+      const response = await api.post('/api/portfolio', data);
+      dispatch({ type: 'CREATE_PORTFOLIO_SUCCESS', payload: response.data });
+    } catch (error) {
+      if (error.message === 'Session expired.') return
+      console.error('Error creating portfolio item', error);
+    }
+  };
+}
