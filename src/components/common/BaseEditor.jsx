@@ -41,7 +41,9 @@ class BaseEditor extends Component {
 
     this.setState({ isSaving: true, error: null })
     try {
-      const response = await api.put(`${endpoint}/${formData.id}`, formData)
+      const response = formData.id
+        ? await api.put(`${endpoint}/${formData.id}`, formData)
+        : await api.post(endpoint, formData)
       if (onSaveSuccess) {
         onSaveSuccess(response.data)
       }

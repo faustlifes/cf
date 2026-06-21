@@ -11,6 +11,7 @@ const PortfolioItem = ({ id, src, title, title2, category, isLoggedIn, dispatch 
   const [isEditing, setIsEditing] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
+  const [deleteError, setDeleteError] = useState(null)
 
   const toggleMenu = (e) => {
     e.preventDefault()
@@ -34,13 +35,13 @@ const PortfolioItem = ({ id, src, title, title2, category, isLoggedIn, dispatch 
 
   const handleConfirmDelete = async () => {
     setIsDeleting(true)
+    setDeleteError(null)
     try {
       await api.delete(`/api/portfolio/${id}`)
       dispatch({ type: 'DELETE_PORTFOLIO_SUCCESS', payload: id })
     } catch (err) {
       if (err.message !== 'Session expired.') {
-        console.error('Failed to delete portfolio item:', err)
-        setShowDeleteConfirm(false)
+        setDeleteError('Failed to delete item. Please try again.')
       }
     } finally {
       setIsDeleting(false)
@@ -100,8 +101,9 @@ const PortfolioItem = ({ id, src, title, title2, category, isLoggedIn, dispatch 
         isOpen={showDeleteConfirm}
         title='Confirm Delete'
         message='Are you sure you want to delete this portfolio item? This action cannot be undone.'
+        errorMessage={deleteError}
         onConfirm={handleConfirmDelete}
-        onCancel={() => setShowDeleteConfirm(false)}
+        onCancel={() => { setShowDeleteConfirm(false); setDeleteError(null) }}
       />
     </li>
   )

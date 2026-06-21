@@ -1,31 +1,8 @@
 import BaseEditor from '../common/BaseEditor.jsx'
-import api from '../../utils/api'
 
 const CATEGORIES = ['Graphic Design', 'Web Design', 'Landing Pages', 'Wordpress']
 
 class PortfolioEditor extends BaseEditor {
-  async handleSave(e) {
-    if (e) e.preventDefault()
-    const { endpoint, onSaveSuccess } = this.props
-    const { formData } = this.state
-
-    this.setState({ isSaving: true, error: null })
-    try {
-      let response
-      if (formData.id) {
-        response = await api.put(`${endpoint}/${formData.id}`, formData)
-      } else {
-        response = await api.post(endpoint, formData)
-      }
-      if (onSaveSuccess) onSaveSuccess(response.data)
-    } catch (err) {
-      if (err.message === 'Session expired.') return
-      this.setState({ error: err.response?.data?.message || err.message || 'Failed to save.' })
-    } finally {
-      this.setState({ isSaving: false })
-    }
-  }
-
   renderFormFields() {
     const { formData } = this.state
 
