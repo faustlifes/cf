@@ -1,4 +1,4 @@
-import api from '../utils/api'
+import api, { SESSION_EXPIRED_MESSAGE } from '../utils/api'
 
 export const showMore = () => {
   return {
@@ -33,7 +33,7 @@ export function fetchNews(path) {
       console.log('fetchNews response data:', response.data)
       dispatch(receiveNews(response.data))
     } catch (error) {
-      if (error.message === 'Session expired.') return
+      if (error.message === SESSION_EXPIRED_MESSAGE) return
       console.error('fetchNews error:', error)
       dispatch(fetchError())
     }

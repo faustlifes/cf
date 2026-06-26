@@ -1,6 +1,7 @@
 import axios from 'axios'
+import { SESSION_EXPIRED_MESSAGE } from './constants'
 
-export const SESSION_EXPIRED_MESSAGE = 'Session expired.'
+export { SESSION_EXPIRED_MESSAGE }
 
 const api = axios.create({
   baseURL: '/',

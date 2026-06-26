@@ -1,4 +1,4 @@
-import api from '../utils/api'
+import api, { SESSION_EXPIRED_MESSAGE } from '../utils/api'
 
 export const fetchTeammates = () => {
   return async (dispatch) => {
@@ -6,7 +6,7 @@ export const fetchTeammates = () => {
       const response = await api.get('/api/teammates')
       dispatch({ type: 'FETCH_TEAMMATES_SUCCESS', payload: response.data })
     } catch (error) {
-      if (error.message === 'Session expired.') return
+      if (error.message === SESSION_EXPIRED_MESSAGE) return
       console.error('Error fetching teammates', error)
     }
   }

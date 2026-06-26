@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import NewsEditor from './news/NewsEditor.jsx'
 import ConfirmationModal from './common/ConfirmationModal.jsx'
-import api from '../utils/api'
+import api, { SESSION_EXPIRED_MESSAGE } from '../utils/api'
 import '../styles/news-management.css'
 
 const NewsItem = ({ id, src, date, rawDate, title, text, isLoggedIn, dispatch }) => {
@@ -33,7 +33,7 @@ const NewsItem = ({ id, src, date, rawDate, title, text, isLoggedIn, dispatch })
       dispatch({ type: 'DELETE_NEWS_SUCCESS', payload: id })
       setShowDeleteConfirm(false)
     } catch (err) {
-      if (err.message !== 'Session expired.') {
+      if (err.message !== SESSION_EXPIRED_MESSAGE) {
         console.error('Failed to delete news:', err)
         setShowDeleteConfirm(false)
       }

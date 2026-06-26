@@ -2,17 +2,21 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import BaseEditor from '../components/common/BaseEditor'
 import api from '../utils/api'
+import { SESSION_EXPIRED_MESSAGE } from '../utils/constants'
 
-jest.mock('../utils/api', () => ({
-  __esModule: true,
-  SESSION_EXPIRED_MESSAGE: 'Session expired.',
-  default: {
-    get: jest.fn(),
-    post: jest.fn(),
-    put: jest.fn(),
-    delete: jest.fn(),
-  },
-}))
+jest.mock('../utils/api', () => {
+  const { SESSION_EXPIRED_MESSAGE: msg } = jest.requireActual('../utils/constants')
+  return {
+    __esModule: true,
+    SESSION_EXPIRED_MESSAGE: msg,
+    default: {
+      get: jest.fn(),
+      post: jest.fn(),
+      put: jest.fn(),
+      delete: jest.fn(),
+    },
+  }
+})
 
 const noop = () => {}
 
@@ -152,7 +156,7 @@ describe('BaseEditor.handleSave — negative paths (MF-8)', () => {
   })
 
   test('does NOT show error when PUT rejects with "Session expired."', async () => {
-    api.put.mockRejectedValueOnce({ message: 'Session expired.' })
+    api.put.mockRejectedValueOnce({ message: SESSION_EXPIRED_MESSAGE })
 
     render(
       <BaseEditor
@@ -166,11 +170,11 @@ describe('BaseEditor.handleSave — negative paths (MF-8)', () => {
     fireEvent.click(screen.getByText('Save Changes'))
 
     await waitFor(() => expect(api.put).toHaveBeenCalled())
-    expect(screen.queryByText('Session expired.')).not.toBeInTheDocument()
+    expect(screen.queryByText(SESSION_EXPIRED_MESSAGE)).not.toBeInTheDocument()
   })
 
   test('does NOT show error when POST rejects with "Session expired."', async () => {
-    api.post.mockRejectedValueOnce({ message: 'Session expired.' })
+    api.post.mockRejectedValueOnce({ message: SESSION_EXPIRED_MESSAGE })
 
     render(
       <BaseEditor
@@ -184,7 +188,7 @@ describe('BaseEditor.handleSave — negative paths (MF-8)', () => {
     fireEvent.click(screen.getByText('Save Changes'))
 
     await waitFor(() => expect(api.post).toHaveBeenCalled())
-    expect(screen.queryByText('Session expired.')).not.toBeInTheDocument()
+    expect(screen.queryByText(SESSION_EXPIRED_MESSAGE)).not.toBeInTheDocument()
   })
 
   test('onSaveSuccess is NOT called when save fails', async () => {

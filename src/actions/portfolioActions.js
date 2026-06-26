@@ -1,4 +1,4 @@
-import api from '../utils/api'
+import api, { SESSION_EXPIRED_MESSAGE } from '../utils/api'
 
 export const changeLink = (number) => {
   return {
@@ -13,7 +13,7 @@ export const fetchPortfolio = () => {
       const response = await api.get('/api/portfolio')
       dispatch({ type: 'FETCH_PORTFOLIO_SUCCESS', payload: response.data })
     } catch (error) {
-      if (error.message === 'Session expired.') return
+      if (error.message === SESSION_EXPIRED_MESSAGE) return
       console.error('Error fetching portfolio', error)
     }
   }

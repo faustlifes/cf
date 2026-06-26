@@ -1,4 +1,4 @@
-import api from '../utils/api'
+import api, { SESSION_EXPIRED_MESSAGE } from '../utils/api'
 
 let switchAutoTimerId
 let switchAutoEnableTimerId
@@ -56,7 +56,7 @@ export const fetchSliders = () => {
       const response = await api.get('/api/sliders');
       dispatch({ type: 'FETCH_SLIDERS_SUCCESS', payload: response.data });
     } catch (error) {
-      if (error.message === 'Session expired.') return
+      if (error.message === SESSION_EXPIRED_MESSAGE) return
       console.error('Error fetching sliders', error);
     }
   };
@@ -68,7 +68,7 @@ export const updateSlider = (id, data) => {
       const response = await api.put(`/api/sliders/${id}`, data);
       dispatch({ type: 'UPDATE_SLIDER_SUCCESS', payload: response.data });
     } catch (error) {
-      if (error.message === 'Session expired.') return
+      if (error.message === SESSION_EXPIRED_MESSAGE) return
       console.error('Error updating slider', error);
     }
   };
