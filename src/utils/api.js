@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+export const SESSION_EXPIRED_MESSAGE = 'Session expired.'
+
 const api = axios.create({
   baseURL: '/',
 })
@@ -45,7 +47,7 @@ api.interceptors.request.use(
     if (token) {
       if (isTokenExpired(token)) {
         handleSessionExpired()
-        return Promise.reject(new Error('Session expired.'))
+        return Promise.reject(new Error(SESSION_EXPIRED_MESSAGE))
       }
       config.headers.Authorization = `Bearer ${token}`
     }
@@ -59,7 +61,7 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       handleSessionExpired()
-      return Promise.reject(new Error('Session expired.'))
+      return Promise.reject(new Error(SESSION_EXPIRED_MESSAGE))
     }
     return Promise.reject(error)
   }

@@ -4,10 +4,14 @@ import BaseEditor from '../components/common/BaseEditor'
 import api from '../utils/api'
 
 jest.mock('../utils/api', () => ({
-  get: jest.fn(),
-  post: jest.fn(),
-  put: jest.fn(),
-  delete: jest.fn(),
+  __esModule: true,
+  SESSION_EXPIRED_MESSAGE: 'Session expired.',
+  default: {
+    get: jest.fn(),
+    post: jest.fn(),
+    put: jest.fn(),
+    delete: jest.fn(),
+  },
 }))
 
 const noop = () => {}

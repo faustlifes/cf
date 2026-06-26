@@ -1,6 +1,6 @@
 import { Component } from 'react'
 import PropTypes from 'prop-types'
-import api from '../../utils/api'
+import api, { SESSION_EXPIRED_MESSAGE } from '../../utils/api'
 
 class BaseEditor extends Component {
   constructor(props) {
@@ -48,7 +48,7 @@ class BaseEditor extends Component {
         onSaveSuccess(response.data)
       }
     } catch (err) {
-      if (err.message === 'Session expired.') return
+      if (err.message === SESSION_EXPIRED_MESSAGE) return
       this.setState({
         error:
           err.response?.data?.message ||

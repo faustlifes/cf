@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import PortfolioEditor from './portfolio/PortfolioEditor.jsx'
 import ConfirmationModal from './common/ConfirmationModal.jsx'
-import api from '../utils/api'
+import api, { SESSION_EXPIRED_MESSAGE } from '../utils/api'
 import '../styles/news-management.css'
 
 const PortfolioItem = ({
@@ -48,7 +48,7 @@ const PortfolioItem = ({
       await api.delete(`/api/portfolio/${id}`)
       dispatch({ type: 'DELETE_PORTFOLIO_SUCCESS', payload: id })
     } catch (err) {
-      if (err.message !== 'Session expired.') {
+      if (err.message !== SESSION_EXPIRED_MESSAGE) {
         setDeleteError('Failed to delete item. Please try again.')
       }
     } finally {
