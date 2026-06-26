@@ -4,12 +4,16 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import PortfolioItem from '../components/portfolioItem'
 import api from '../utils/api'
+import { SESSION_EXPIRED_MESSAGE } from '../utils/constants'
 
-jest.mock('../utils/api', () => ({
-  __esModule: true,
-  SESSION_EXPIRED_MESSAGE: 'Session expired.',
-  default: { delete: jest.fn() },
-}))
+jest.mock('../utils/api', () => {
+  const { SESSION_EXPIRED_MESSAGE: msg } = jest.requireActual('../utils/constants')
+  return {
+    __esModule: true,
+    SESSION_EXPIRED_MESSAGE: msg,
+    default: { delete: jest.fn() },
+  }
+})
 
 jest.mock('../components/portfolio/PortfolioEditor.jsx', () => () => null)
 
@@ -72,7 +76,7 @@ describe('PortfolioItem — delete flow', () => {
   })
 
   test('suppresses deleteError when delete fails with session expired', async () => {
-    api.delete.mockRejectedValueOnce({ message: 'Session expired.' })
+    api.delete.mockRejectedValueOnce({ message: SESSION_EXPIRED_MESSAGE })
     setup()
 
     await openDeleteModal()
@@ -84,7 +88,7 @@ describe('PortfolioItem — delete flow', () => {
     ).not.toBeInTheDocument()
   })
 
-  test('cancel clears deleteError (M5 mutation guard)', async () => {
+  test('cancel clears deleteError so error is absent on modal reopen (M5 mutation guard)', async () => {
     api.delete.mockRejectedValueOnce({ message: 'Network Error' })
     setup()
 
@@ -98,6 +102,10 @@ describe('PortfolioItem — delete flow', () => {
     )
 
     fireEvent.click(screen.getByText('Cancel'))
+
+    // Reopen the modal — error must NOT appear if deleteError was cleared
+    fireEvent.click(screen.getByText('⋮'))
+    fireEvent.click(screen.getByText('Delete'))
 
     expect(
       screen.queryByText('Failed to delete item. Please try again.')
