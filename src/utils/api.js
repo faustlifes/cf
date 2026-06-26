@@ -7,7 +7,9 @@ const api = axios.create({
 })
 
 let _store = null
-export const setStore = (store) => { _store = store }
+export const setStore = (store) => {
+  _store = store
+}
 
 const isTokenExpired = (token) => {
   try {
