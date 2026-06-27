@@ -1,4 +1,4 @@
-import api from '../utils/api'
+import api, { SESSION_EXPIRED_MESSAGE } from '../utils/api'
 
 let countTimerId
 
@@ -36,7 +36,7 @@ export const fetchTeamFacts = () => {
       const response = await api.get('/api/team-facts');
       dispatch({ type: 'FETCH_TEAM_FACTS_SUCCESS', payload: response.data });
     } catch (error) {
-      if (error.message === 'Session expired.') return
+      if (error.message === SESSION_EXPIRED_MESSAGE) return
       console.error('Error fetching team facts', error);
     }
   };

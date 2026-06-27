@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import TeammateEditor from './team/TeammateEditor.jsx'
 import ConfirmationModal from './common/ConfirmationModal.jsx'
-import api from '../utils/api'
+import api, { SESSION_EXPIRED_MESSAGE } from '../utils/api'
 import '../styles/news-management.css' // Reusing management styles
 
 const TeamMember = ({ id, src, name, position, social, isLoggedIn, dispatch }) => {
@@ -34,7 +34,7 @@ const TeamMember = ({ id, src, name, position, social, isLoggedIn, dispatch }) =
       dispatch({ type: 'DELETE_TEAMMATE_SUCCESS', payload: id })
       setShowDeleteConfirm(false)
     } catch (err) {
-      if (err.message !== 'Session expired.') {
+      if (err.message !== SESSION_EXPIRED_MESSAGE) {
         console.error('Failed to delete teammate:', err)
         setShowDeleteConfirm(false)
       }

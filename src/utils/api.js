@@ -1,11 +1,16 @@
 import axios from 'axios'
+import { SESSION_EXPIRED_MESSAGE } from './constants'
+
+export { SESSION_EXPIRED_MESSAGE }
 
 const api = axios.create({
   baseURL: '/',
 })
 
 let _store = null
-export const setStore = (store) => { _store = store }
+export const setStore = (store) => {
+  _store = store
+}
 
 const isTokenExpired = (token) => {
   try {
@@ -45,7 +50,7 @@ api.interceptors.request.use(
     if (token) {
       if (isTokenExpired(token)) {
         handleSessionExpired()
-        return Promise.reject(new Error('Session expired.'))
+        return Promise.reject(new Error(SESSION_EXPIRED_MESSAGE))
       }
       config.headers.Authorization = `Bearer ${token}`
     }
@@ -59,7 +64,7 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       handleSessionExpired()
-      return Promise.reject(new Error('Session expired.'))
+      return Promise.reject(new Error(SESSION_EXPIRED_MESSAGE))
     }
     return Promise.reject(error)
   }

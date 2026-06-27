@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import api from '../../utils/api'
+import api, { SESSION_EXPIRED_MESSAGE } from '../../utils/api'
 
 const UserProfileModal = ({ isOpen, onClose, onUpdateSuccess }) => {
   const [name, setName] = useState('')
@@ -107,7 +107,7 @@ const UserProfileModal = ({ isOpen, onClose, onUpdateSuccess }) => {
         onClose()
       }, 1500)
     } catch (err) {
-      if (err.message === 'Session expired.') return
+      if (err.message === SESSION_EXPIRED_MESSAGE) return
       setError(err.response?.data?.message || 'Failed to update profile. Please try again.')
     } finally {
       setLoading(false)

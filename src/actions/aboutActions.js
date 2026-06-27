@@ -1,4 +1,4 @@
-import api from '../utils/api'
+import api, { SESSION_EXPIRED_MESSAGE } from '../utils/api'
 
 export const showView = (number) => {
   return {
@@ -19,7 +19,7 @@ export const fetchAbouts = () => {
       const response = await api.get('/api/about');
       dispatch({ type: 'FETCH_ABOUT_SUCCESS', payload: response.data || {} }); // Assume a single document or object for about
     } catch (error) {
-      if (error.message === 'Session expired.') return
+      if (error.message === SESSION_EXPIRED_MESSAGE) return
       console.error('Error fetching about', error);
     }
   };
